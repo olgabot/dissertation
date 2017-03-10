@@ -75,3 +75,17 @@ Please submit bug reports on [github][3].
 Older bug reports can be accessed from [Google Code][4].
 [4]: http://code.google.com/p/ucsd-thesis/issues/list
 
+
+Notes from Daniella/Mike
+------------------------
+
+Also I had to make some minor changes by adding packages to change formatting in the bibliography.
+Here are the two packages I had to add into the template (to set the spacing and remove the weird url font in the bibliography):
+
+    \usepackage{setspace}
+    \usepackage{url}
+
+Then before the actual bibliography
+
+    \urlstyle{same}
+    \singlespacing
