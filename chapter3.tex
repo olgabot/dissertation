@@ -1,0 +1,333 @@
+\chapter{Single-cell alternative splicing reveals hidden cell states}
+This is only a test.
+\section{A section}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nulla odio
+sem, bibendum ut, aliquam ac, facilisis id, tellus. Nam posuere pede
+sit amet ipsum. Etiam dolor. In sodales eros quis pede.  Quisque sed
+nulla et ligula vulputate lacinia. In venenatis, ligula id semper
+feugiat, ligula odio adipiscing libero, eget mollis nunc erat id orci.
+Nullam ante dolor, rutrum eget, vestibulum euismod, pulvinar at, nibh.
+In sapien. Quisque ut arcu. Suspendisse potenti. Cras consequat cursus
+nulla.
+
+\subsection{A Figure Example}
+\label{ssec:figure_example}
+
+This subsection shows a sample figure.
+
+\begin{figure}[h] 
+  \centering
+  \includegraphics[width=0.5\textwidth]{sandiego}
+  \caption[Short figure caption (must be \protect{$< 4$} lines in the list of figures)]{A picture of San Diego.  Note that figures must be on their own line (no neighboring text) and captions must be single-spaced and appear \protect\textit{below} the figure.  Captions can be as long as you want, but if they are longer than 4 lines in the list of figures, you must provide a short figure caption.\index{SanDiego}} 
+  \label{fig:sandiego}
+\end{figure}
+
+\subsection{A Table Example}
+
+While in Section \ref{ssec:figure_example} Figure \ref{fig:sandiego} we had a majestic figure, here we provide a crazy table example.
+
+
+%%%% TABLE 1 %%%%
+\vspace{0.25in}
+\begin{table}[!ht]
+\caption[Short figure caption (must be \protect{$< 4$} lines in the list of tables)]{A table of when I get hungry.  Note that tables must be on their own line (no neighboring text) and captions must be single-spaced and appear \protect\textit{above} the table.  Captions can be as long as you want, but if they are longer than 4 lines in the list of figures, you must provide a short figure caption.}
+
+\vspace{-0.25in}
+\begin{center}
+\begin{tabular}{|p{1in}|p{2in}|p{3in}|}
+
+\hline
+Time of day & Hunger Level & Preferred Food \\
+
+\hline
+8am & high & IHOP (French Toast) \\
+
+\hline
+noon & medium & Croutons (Tomato Basil Soup \& Granny Smith Chicken Salad) \\
+
+\hline
+5pm & high & Bombay Coast (Saag Paneer) or Hi Thai (Pad See Ew) \\
+
+\hline
+8pm & medium & Yogurt World (froyo!) \\
+
+\hline
+\end{tabular}
+\end{center}
+\label{tab:analysis3}
+\end{table}
+
+\subsection{Supplementary Figure 1}
+
+% This line is important as it increments the figure count and keeps the figure numbers correct
+% For whatever reason, the caption of Figure 1 is too big and cannot be put into a "minipage" and
+% thus doesn't get an incremental counter.
+% \setcounter{figure}{1}
+
+\begin{minipage}{\textwidth}
+\centering
+\captionof{figure}{\textbf{Quality control of single cell expression and splicing data.}\\
+\textbf{a.} RT-qPCR validation of biomarker expression in the bulk populations of iPSCs (light green), NPCs  (medium green), MNs (dark green). Relative expression of the indicated genes were normalized to housekeeping genes RPL27 and PGK. \\
+\textbf{b.} Sequencing depth for single cell libraries were depicted in box plots. On average, 10-20 million reads of 100bp length was obtained. \\
+% \textbf{c.}~Percent of reads removed by performing \texttt{samtools rmdup} to remove PCR-duplicated reads implied by identical sequence and alignment location.
+\textbf{c.} Number of detected genes for single cell libraries shown as boxplots. Approximately 4,000-6,000 genes were detected at $\mathrm{TPM} > 1$ in single cells. \\
+\textbf{d.} Number of detected genes compared to the sequencing depth for each sample. $x$-axis, number of reads that mapped uniquely to the genome (fewer than 10 locations), $y$-axis, number of genes with $\mathrm{TPM} > 1$ detected in each sample. Bulk samples are indicated with a black outline and outlier samples are indicated with a grey outline. Left, iPSC samples, middle, NPC samples, right, MN samples.\\
+\textbf{e.} Outlier MN cells identified by K-means clustering exhibited a transcriptome resembling NPCs. Unsupervised hierarchical clustering demonstrated that MN outliers are clustered together with NPCs.\\
+% \textbf{e.} Barplots of Bonferonni-corrected $p$-value ($q$) Gene ontology enrichment of biological processes in differentially expressed genes between outliers and non-outliers as found by a non-parametric Mann-Whitney U test.\\
+\textbf{f.} Expression of lineage-specific transcription factors (left) and RNA binding proteins (right). Specifically, POU5F1/OCT4 and LIN28A are specific to iPSCs, PAX6 and MSI1 are more highly expressed in NPCs, and ISL1 and ELAVL4 are only expressed in MNs. \\
+\textbf{g.} PCA of highly variant gene expression. Highly variant is defined as two standard deviations away from mean gene-level variance across all samples.\\
+\textbf{h.} ICA on highly variant gene expression. Highly variant is defined as two standard deviations away from mean gene-level variance across all samples.\\
+\textbf{i.}~Overview of \outrigger's three steps and associated commands: indexing (\texttt{outrigger index}), validation (\texttt{outrigger validate}) and percent spliced-in (Psi/$\Psi$) calculation (\texttt{outrigger psi}). In the first step of building an index, \outrigger\, considers the entirety of junction reads from the user-input dataset to detect exons \emph{de novo}, adds annotated exons, then searches for alternative exons. In the second, optional, step of validating the detected events, \outrigger\, removes alternative exons with flanking introns lacking consensus splice sites. For the third step of calculating Psi/$\Psi$, \outrigger\, utilizes junction reads together with alternative exons defined in the indexing step and calculates $\Psi$ for each sufficiently covered event. Only junction reads are used to represent inclusion or exclusion reads. SE, Skipped Exon; MXE, Mutually Exclusive Exons.\\
+\textbf{j.}~Barplot showing the \outrigger\, cases found across all splicing events and all samples.\\
+\textbf{k.}~The number of AS exons (both SE and MXE event types) detected per single cell library. \\
+\textbf{l.}~Histograms of number of cells per detected AS exon, in each cell type. Many AS exons were found in only one cell. A minimum of 10 cells per phenotype used, indicated by a dashed red line.\\
+\textbf{m.}~Histogram of gene expression across all single cells in iPSC, NPC and MN populations.\\
+\textbf{n.}~Expression of genes containing AS exons. 90\% of the detected splicing events reside in transcripts expressed between ~2.5-10 of $\log_2(\mathrm{TPM}+1)$, as indicated by a dashed black line. \\
+\textbf{o.} Number of detected AS events compared to the sequencing depth for each sample. $x$-axis, number of reads that mapped uniquely to the genome (fewer than 10 locations), $y$-axis, number of non-NA AS events detected in each sample. Bulk samples are indicated with a black outline and outlier samples are indicated with a grey outline. Left, iPSC samples, middle, NPC samples, right, MN samples.
+}
+\label{fig:quality_control}
+% \end{figure}
+\end{minipage}
+
+
+
+% a. The first step (index) uses junctions and annotations to detect novel exons, create an exon-junction graph database, and search for alternative exon structures. b. The second, optional, step (validate) removes splicing events with introns whose splice sites are incompatible with known spliceosomal machinery. c. The last step quantifies percent spliced in (psi), by dividing inclusion reads by total reads. For MXE events, there is an additional step of ensuring that the event is truly an MXE event.
+
+
+
+% \subsection{Supplementary Figure 5}
+% \label{sec:sfig5}
+% \begin{minipage}{\textwidth}
+% \centering
+% \captionof{figure}{\textbf{\texttt{outrigger index}: Graph traversal to define SE and MXE events.} \\
+% \textbf{a.}~Identification of exons and introns in outrigger. We define the beginning of the intron (\texttt{junction\_start}) as one nucleotide downstream of the end of the exon (\texttt{exon\_stop}), and the end of the junction (\texttt{junction\_stop}) is one nucleotide upstream of the beginning of the next exon (\texttt{exon\_start}). \\
+% \textbf{b.}~\texttt{outrigger index} related to step 3: identification of a SE event. In Step 3, we search for skipped exon (SE) alternative events, starting from a potential first exon (exon1) and checking whether its connectivity to exons downstream matches a skipped exon pattern of exon1-exon2 and exon2-exon3, or exon1-exon3. \\
+% \textbf{c.}~\texttt{outrigger index} related to step 3: identification of a MXE event. In Step 3, we also search for mutually exclusive exon (MXE) alternative events, starting from a potential first exon (exon1) and observing whether the downstream exons connect with an MXE pattern of exon1-exon2, exon2-exon4, exon1-exon3, exon3-exon4.\\
+% }
+% \label{fig:outrigger_index_se_mxe}
+% \end{minipage}
+
+
+% \subsection{Supplementary Figure 7}
+% \label{sec:sfig8}
+% \begin{minipage}{\textwidth}
+% \centering
+% \captionof{figure}{\textbf{Quality control of splicing data. }\\
+% % \textbf{c.}~A cartoon depicting generation of split libraries from one single cell. \\
+% % \textbf{d.}~Comparison of a split-cell to its pair (top row) and a different cell (bottom row) in both expression (left column) and splicing (right column). \\
+% % \textbf{e.}~Comparison of a 1,000-cell pooled iPS population to a split-cell (top row) and another 1,000-cell pooled iPSC population (bottom row) in both expression (left column) and splicing (right column). \\
+% % \textbf{f.}~Shannon diversity measure of AS exons within single cells in each population.\\
+% % \textbf{g.}~Venn diagram of AS exons shared between iPSC, NPC, and MN single cells. \\
+% % \textbf{e.}~Boxplots of the number of alternative events detected, pre- and post-duplicate removal.\\
+% % \textbf{f.}~Barplots of the percentage of events in each modality, for each cell type, before duplicate removal.\\
+% % \textbf{g.}~Left, Scatterplot comparing the percent spliced-in, Psi/$\Psi$ metric for pre- and post-duplicate removal. The $x$-axis represents the data before duplicate removal, and the $y$-axis represents the post-duplicate removal dataset. Right, Heatmap showing the percentage of events found in different comparison categories for pre- and post-duplicate removal. Over 90\% of duplicate-removed events had a $\Delta \Psi$ within $0.2$, compared to pre-removal.\\
+% % \textbf{h.}~Left, heatmap showing the \outrigger\, cases in the pre- and post-duplicate removal datasets. Right, barplot showing the \outrigger\, cases in th epost-rmdup dataset.\\
+
+% % \textbf{f.}~Number of detected alternative exons compared to the sequencing depth for each sample. $x$-axis, number of reads that mapped uniquely to the genome (fewer than 10 locations), $y$-axis, number of alternative exons detected in each sample. Bulk samples are indicated with a black outline and outlier samples are indicated with a grey outline. Left, iPSC samples, middle, NPC samples, right, MN samples.
+% }
+% \label{fig:splicing_qc}
+% \end{minipage}
+
+
+
+
+\subsection{Supplementary Figure 2}
+
+
+% {\textbf{Supplementary Fig. 2: Simulated datasets to test performance of \texttt{anchor}.}\\
+\begin{minipage}{\textwidth}
+% \centering
+% % \includegraphics[width=\textwidth]{\maintext/Figure S5.pdf}
+\captionof{figure}{\textbf{Simulated datasets to test performance of \texttt{anchor}.}\label{fig:anchor}\\
+\textbf{a.}~Violinplots depicting the creation of simulated modality datasets with increasing noise. The base dataset (\% Noise = 0) consisted of 100 samples of either all zeros (excluded), half zeros and half ones (bimodal), all ones (included), or all $0.5$s (middle), exactly representing the four modalities. Uniform random noise was added in 5\% increments, with 100 iterations at each noise level.}
+% Insert a negative line space so the "b" is flush as the next line
+\vspace{-10pt}
+\textbf{b.}~Percentage of events categorized as different modalities by \texttt{anchor} in the randomly generated test datasets, across all noise levels, as illustrated in (\textbf{a}). Number of events for each modality is annotated on top of the barplots. \\
+\textbf{c.}~Percentage of events categorized as different modalities by binning in the randomly generated test datasets, across all noise levels, as illustrated in (\textbf{a}). Number of events for each modality is annotated on top of the barplots. \\
+% \textbf{c.}~Change in categorization with the addition of noise. The $x$-axis shows the amount of uniform random noise added, and $y$-axis shows the percentage of events whose original modality (\% Noise = 0) was detected. Modalities are indicated by colors as shown in (\textbf{b}). At the $40\%$ noise level, the excluded and included modalities were estimated as bimodal, showing that the addition of noise randomly added towards the extremes of 0 and 1 and propeled the originally unimodal event into bimodality. The bimodal modality was accurate up to $65\%$ noise.\\
+\textbf{d-g.}~Specificity of modality estimation. Recapitulation of the original modality as a function of additional noise, using \anchor\, (\textbf{d}), binning (\textbf{e}), Bimodality index (\textbf{f}), and diptest (\textbf{g}) methods. The $x$-axis depicts the percent of uniform random noise added (visualized as a triangle gradient), and the $y$-axis depicts the fraction of times a noisy feature was categorized into each modality. The hue of the line is the modality. \\
+\textbf{h.}~Violinplots depicting the creation of the ``Maybe Bimodals'' test set consists of potential bimodal events, each containing 100 samples of only zeros ($\Psi = 0$) and ones ($\Psi = 1$) in every combination, shown here as relative to the number of ones. We added uniform random noise in increasing 5\% levels for 100 iterations at each level. While each combination of 1s and 0s was created, only a subset are shown for brevity -- 1:99, 25:75, 50:50, 75:25, and 99:1 ratios of 1:0 are shown, with added uniform random noise of 0\% (original), 25\%, 50\%, and 75\%.\\
+\textbf{i.}~Percentage of events categorized in modalities by \texttt{anchor} in the randomly generated bimodal test datasets, across all noise levels, as illustrated in (\textbf{h}). Number of events for each modality is annotated on top of the barplots. \\
+\textbf{j.}~Percentage of events categorized in modalities by binning in the randomly generated bimodal test datasets, across all noise levels, as illustrated in (\textbf{h}). Number of events for each modality is annotated on top of the barplots. \\
+\textbf{k-r.}~Accuracy of bimodality prediction, as a function of the noise added to the dataset. \\
+\textbf{k-n.}~Specificity of bimodality estimation upon addition of uniform random noise. The $x$-axis shows the percent added uniform random noise (visualized as a triangle gradient), and the $y$-axis indicates the fraction of time features in each noise percentage and proportion of $1:0$ was categorized as bimodal. Overall, all but the very extremes of the $1:0$ proportions were consistently categorized as bimodal until 70\% noise, after which point nearly all events became multimodal. Modality estimations are shown using \anchor\, (\textbf{k}), binning (\textbf{l}), Bimodality Index (\textbf{m}), and Diptest (\textbf{n}).\\
+\textbf{o-r.}~Sensitivity of bimodality detection. Percentage of events predicted as bimodal given different proportions of 0s and 1s, and increasing uniform random noise. Events are called as bimodal with approximately 9:1 ratio of 0s and 1s (and vice versa), shown with a dotted line at 10\% ones and 90\% ones. Bottom triangle gradient shows increasing ratio of ones to zeros, i.e. from exclusion to bimodal, to inclusion. Bimodality estimations are shown using \anchor\, (\textbf{o}), binning (\textbf{p}), Bimodality Index (\textbf{q}), and Diptest (\textbf{r}).\\
+% \textbf{k-r.}~Specificity of modality estimation upon addition of  uniform random noise on modality estimation using \anchor\, (Bayesian) method.\\
+% \textbf{l.}~Specificity of modality estimation upon addition of  uniform random noise on modality estimation using binned method.\\
+% \textbf{m.}~Specificity of modality estimation upon addition of  uniform random noise on modality estimation using Bimodality Index method.\\
+% \textbf{n.}~Specificity of modality estimation upon addition of  uniform random noise on modality estimation using diptest method.\\
+% \textbf{o.}~Sensitivity to bimodality based on ratio of $0:1$ using \anchor\, (Bayesian) modality estimation.\\
+% \textbf{p.}~Sensitivity to bimodality based on ratio of $0:1$ using binnned modality estimation.\\
+% \textbf{q.}~Sensitivity to bimodality based on ratio of $0:1$ using Bimodality Index bimodality estimation.\\
+% \textbf{r.}~Sensitivity to bimodality based on ratio of $0:1$ using diptest bimodality estimation.\\
+% \textbf{e.}~Left, 10 events with largest Bayes Factor, $K$ (best fit) from the assigned modality. Right, 10 events with smallest Bayes Factor, $K$ (worst fit) from their assigned modality. For multimodal, as there is no fit, this simply shows 20 random events.}
+\textbf{s.}~Summary of total number of AS events identifed by \outrigger\, and their modality identified by \anchor\, for each cell type.\\
+\textbf{t.}~Venn diagrams of events shared in modalities between cell types. AS events in included and exluded modality are largely shared across the three cell types, but fewer bimodal events are shared across three cell types. Boxed, all AS events, regardless of modality.\\
+\textbf{u.}~Percentage of modality AS events inconsistent with pooled estimates, where the mean difference of psi between singles and pooled ($|\Delta\bar{\Psi}|$) is greater than $0.2$.
+\textbf{v-y.}~Effect of the expression level per AS event on modality estimation.\\
+\textbf{v.}~Number of genes remaining at the expression cutoffs.\\
+\textbf{w.}~Number of AS exons at varying expression cutoffs.\\
+\textbf{x.}~Percentage of modality estimated at different expression cutoffs (right, zoomed in panel).\\
+\textbf{y.}~Number of modality events estimated at different expression cutoffs (right, zoomed in panel).\\
+\end{minipage}
+
+
+
+
+% % \pagebreak
+% \subsection{Supplementary Figure 10}
+% \begin{minipage}{\textwidth}
+% \centering
+% \captionof{figure}{\textbf{Simulated bimodal datasets to test the performance of \texttt{anchor} in identifying bimodal events.} 
+% \textbf{a.}~Violinplots depicting the creation of the ``Maybe Bimodals'' test set consists of potential bimodal events, each containing 100 samples of only zeros ($\Psi = 0$) and ones ($\Psi = 1$) in every combination, shown here as relative to the number of ones. We added uniform random noise in increasing 5\% levels for 100 iterations at each level. While each combination of 1s and 0s was created, only a subset are shown for brevity -- 1:99, 25:75, 50:50, 75:25, and 99:1 ratios of 1:0 are shown, with added uniform random noise of 0\% (original), 25\%, 50\%, and 75\%.\\
+% \textbf{b.}~Percentage of events categorized as bimodal events by \texttt{anchor} in the randomly generated bimodal test datasets as illustrated in (\textbf{a}). Number of events for each modality is annotated on top of the barplots. \\
+% \textbf{c.}~Accuracy of bimodality prediction, shown as a function of the noise added to the dataset. The $x$-axis shows the percent added noise, and the $y$-axis indicates the fraction of time features in each noise percentage and proportion of $1:0$ was categorized as bimodal. Overall, all but the very extremes of the $1:0$ proportions were consistently categorized as bimodal until 70\% noise, after which point nearly all events became multimodal, consistent with the previous simulated modality dataset as in \textbf{Supplementary Fig.~\ref{fig:anchor_perfect_modalities}}.\\
+% \textbf{d.}~Chart showing the mean percentage of events predicted as bimodal given different proportions of 0s and 1s, and increasing uniform random noise. Events are called as bimodal with approximately 9:1 ratio of 0s and 1s (and vice versa), shown with a dotted line at 10\% ones and 90\% ones.\\
+% % \textbf{e.}~Left, 10 events with largest Bayes Factor, $K$ (best fit) from the assigned modality. Right, 10 events with smallest Bayes Factor, $K$ (worst fit) from their assigned modality. For multimodal, as there is no fit, this simply shows 20 random events.}
+% \label{fig:anchor_maybe_bimodals}
+% \end{minipage}
+
+% \pagebreak
+% \subsection{Supplementary Figure 11}
+
+% \begin{minipage}{\textwidth}
+% \captionof{figure}{\textbf{Comparison of \anchor\, to other methods.}
+% We compared \anchor\, to other methods using both the simulated modalities from \textbf{Supplementary Fig.~\ref{fig:anchor_perfect_modalities}} (\textbf{a-d}) and simulated bimodals from \textbf{Supplementary Fig.~\ref{fig:anchor_maybe_bimodals}} (\textbf{e-i}) datasets.\\
+% \textbf{a.}~Barplots of number of features from ``Perfect Modalities'' categorized to each modality using simple binning.\\
+% \textbf{b.}~Accuracy of modality categorization by simple binning on ``Perfect Modalities.''\\
+% \textbf{c.}~Bimodality index as calculated for the ``Perfect Modalities'' dataset, showing only the bimodal event with little to no noise had a high enough bimodality index to be considered bimodal by this method.\\
+% \textbf{e.}~Hartigan and Hartigan’s Dip test as calculated for the ``Perfect Modalities'' dataset, showing it cannot detect bimodality in the ``perfect'' bimodal event but can find bimodality in the noisy bimodal events, though the accuracy drops off later than \anchor\,(80\% as compared to 70\% in \anchor).\\
+% \textbf{e.}~Barplots of number of features from ``Maybe Bimodals'' categorized to each modality using simple binning.\\
+% \textbf{f.}~Accuracy of modality categorization by simple binning on ``Maybe Bimodals'', showing bimodality categorization falls off much earlier, at 40\%, compared to 70\% for anchor. Inset, percent of events classified as bimodal at different 0:1 ratios, averaged over all noisy datasets.\\
+% \textbf{g.}~Bimodality index was calculated for the ``Maybe Bimodals'' dataset, showing only the ``perfect'' bimodal event (exactly 50:50 ratio of 1:0) had a high enough bimodality index to be considered bimodal by this method. Inset, percent of events calssified as bimodal at different 0:1 ratios, averged over all noisy datasets.\\
+% \textbf{h.}~Hartigan and Hartigan’s Dip test as calculated for the ``Maybe Bimodals'' dataset, showing it cannot detect bimodality when there is no noise, but can find bimodality in the noisy bimodal events, and the accuracy drops off later than \anchor\, (80\% compared to \texttt{anchor}'s 70\%). Inset, percent of events classified as bimodal at different 0:1 ratios, averaged over all noisy datasets.}
+% \label{fig:anchor_comparison_to_other_methods}
+% \end{minipage}
+
+\pagebreak
+\subsection{Supplementary Figure 3}
+% \label{fig:modality_features}
+
+% \textbf{Supplementary Fig. 3: Molecular features of each splicing modality.}
+% \begin{minipage}{\textwidth}
+% \centering
+% \begin{flushleft}
+
+% The following is a weird hack to make the figure numbers increment properly and get the references right.
+\captionsetup{justification=raggedright
+}
+\captionof{figure}{\textbf{Molecular features of each splicing modality.}\label{fig:modality_features}\\
+% \end{flushleft}
+% \textbf{c.}~Randomly chosen events from each modality in iPSC cells. Bimodal and multimodal modalities are less consistent with corresponding $\Psi$ scores from pooled samples. 10 random AS events from included (red), excluded (blue), bimodal (purple) and multimodal (grey) modalities were illustrated with their $\Psi$ in single cells. The pooled samples are illustrated in black circles.\\
+% \\
+% \textbf{e.}~Effect of the percentage of cells required on modality estimation. Left, number of AS exons at varying cell percentage cutoffs. Right, percentage of modality estimated at different cell percentages.\\
+\textbf{a.}~Flanking intron sequence is more conserved in  bimodal modality. Shown in motor neurons,  intron conservation of bimodal events is slightly higher than excluded AS events.}
+\textbf{b.}~Barplot of mean placental mammal PhastCons score in introns flanking modality exons, across cell types. Bimodal exons in motor neurons  and NPCs are statistically enriched for higher conservation as compared to iPSCs (Kolmogorov-Smirnov test, Bonferroni-corrected).\\
+\textbf{c.}~Significance (top) and boxplots (bottom) of the length of the alternative exons of different modalities. Constitutive exons are statistically enriched for longer exons, compared to excluded modality (Kolmogorov-Smirnov test, Bonferonni-corrected).\\
+\textbf{d.}~Heatmap of the number of AS events in each modality overlapping with repetitive elements with AS exons, shown in iPSC. Excluded modality is statistically enriched for overlap ($q < 10^{-50}$, Hypergeometric test).\\
+\textbf{e.}~Significance (top) and boxplots (bottom) of the $5^\prime$ splice site scores of the exon, specifically the splice donor site as measured by MaxEntScan. Bimodal and excluded exons have statistically significantly lower splice site scores than included exons (Kolmogorov-Smirnov test, Bonferonni-corrected).\\
+\textbf{f.}~Significance (top) and boxplots (bottom) of the $3^\prime$ splice site scores of the exon, specifically the splice acceptor site as measured by MaxEntScan. Bimodal and excluded exons have statistically significantly lower splice site scores than included exons (Kolmogorov-Smirnov test, Bonferonni-corrected).\\
+\textbf{g.}~Significance (top) and boxplots (bottom) of the mean expression level of genes ($\log_2(\mathrm{TPM}+1)$, x axis) harboring corresponding AS events in each modality. While events from all five modalities are detected across entire range of gene expression, genes containing bimodal exons are statistically enriched for lower expression (Kolmogorov-Smirnov test, Bonferonni-corrected).\\
+\textbf{h.}~Significance (top) and boxplots (bottom) of the GC content of the alternative exons of different modalities. Excluded exons are statistically enriched for higher GC content, compared to included exons (Kolmogorov-Smirnov test, Bonferonni-corrected).\\
+\textbf{i.}~Significance (top) and boxplots (bottom) of the number of exons per gene harboring corresponding modalities, measured by the maximum number of genes in any transcript of a gene. Genes containing excluded exons are statistically enriched for fewer exons per gene (Kolmogorov-Smirnov test, Bonferonni-corrected).\\
+\textbf{j.}~Overview of defining ``Intron groups'' defined by cell-type, modality, and intron context, and process for obtaining their conserved $k$-mer $Z$-scores.\\
+\textbf{k.}~Boxplots of the $Z$-scores of $k$-mer enrichment in the different intron groups, labeled with a colorbar of modality, intron context, and cell-type.\\
+\textbf{l.}~PCA on $k$-mer $Z$-scores, with each point as a $k$-mer and the vector components as the introns. $k$-mers with principal comoponent greater than 2.5 standard deviations away from zero were labeled with the sequence, colored by the majority nucleotide. If there was a tie for the majority nucleotide, it was assigned the color grey. An interactive version of this plot can be viewed here: \url{https://plot.ly/~OlgaBotvinnik/20/modality-k-mer-z-scores-background-phenotype/}. Multimodal is not shown because its $k$-mer enrichment has a much larger range than the other modalities and overwhelms the plot.\\
+\textbf{m.}~Overview of motif enrichments calculated from intron groups using a $t$-test and their transformation into PCA for visualization.\\
+\textbf{n.}~Boxplots of the $t$-statistics of motif enrichment in different intron groups, labeled with colorbars of modality, intron context, and cell-type.\\
+\textbf{o.}~PCA on the $t$-statistics of the Motif enrichment, labeled with the motif ID and RPB name from CISBP v0.6. An interactive version of this plot is available at\\\url{https://plot.ly/~OlgaBotvinnik/32/cisbp-motif-t-test-enrichments-background-phenotype/}
+% } 
+
+% \end{minipage}
+
+
+% \subsection{Supplementary Figure 13}
+
+% \begin{minipage}{\textwidth}
+% \centering
+% \captionof{figure}{\textbf{Motif Enrichment in each modality.}\\
+% \label{fig:kmer_enrichment}
+% \end{minipage}
+
+\pagebreak
+\subsection{Supplementary Figure 4}
+
+\begin{minipage}{\textwidth}
+\centering
+\captionof{figure}{\textbf{Switching AS events are enriched for transcriptome and post-transcriptional regulation GO terms.}\\
+\textbf{a.}~AS events change modalities during iPSC to NPC transition. A total of 7,962 AS events was identified as common events in both iPSCs and MNs. Notably, $\approx 82\%$ of excluded events in iPSCs remained in excluded modality, and $\approx 84\%$ of included events in iPSCs remained as included in NPCs. In contrast 42\% of bimodal events in iPSCs switch to either included or excluded modalities in NPCs.\\
+\textbf{b.}~Of the common events shared by all three populations, the events changing between iPSCs to NPCs (light green) and iPSCs to MNs (dark green). Venn diagram show the overlap between the two sets of switching AS events and GO function terms for each section of switching events.\\
+}
+\label{fig:switching_events}
+\end{minipage}
+
+% \pagebreak
+\subsection{Supplementary Figure 5}
+\label{fig:bimodal_correlations}
+
+% Again don't do a minipage here because the caption is too big.
+\begin{minipage}{\textwidth}
+\centering
+\captionof{figure}{\textbf{Highly variant AS events reveal intricacies of cell states.}\\
+\textbf{a.}~Read coverage tracks for SNAP25 in MNs. Numbers indicate observed junction reads.\\
+\textbf{b.}~Spearman correlation values of a gene's alternative splicing score ($\Psi$) to gene expression values, with a dotted line at the threshold of $R > 0.5$.\\
+\textbf{c.}~Tracks from NPCs were shown to illustrate the bimodal inclusion of exon 5. Numbers indicate observed junction reads covering this SE in DYNC1I2.\\
+% \textbf{a-e.}~A bimodal SE event in DYNC1I2 as an example to dissect NPCs into a more proliferating subgroup and a subgroup on the trajectory of neuronal differentiation.\\
+% \textbf{a.}~Expression of DYNC1I2 (upper) and the Psi distribution of a SE event (lower) in DYNC1I2 in the three populations. This event is bimodal in both iPSCs, NPCs and becomes included in MNs.\\
+% \textbf{b.}~Genes correlating with Psi of this SE event is able to cluster the NPCs into two subgroups. Rows represent the genes and columns represent single cells in NPCs. Genes detected in NPC and correlated with Psi, using an emipircally-defined threshold of Spearman's $R$ greater than two standard deviations away from the mean permuted correlation values. Green: NPC. Blue: cells with Psi/$\Psi$ around 0. Red: cells with Psi around 1. Light Blue to yellow: cells with Psi/$\Psi$ around 0.5. Black and grey: cells designated as qualified cells versus outlier-cells based on k-mean analysis. Representative genes enriched in the two subgroups are highlighted in blue or red. 
+% \textbf{c.}~Example genes enriched in the two subgroups of NPCs. ONECUT2 and DCC are more highly expressed in cells with Psi $\approx 1$; ANLN and MKI67 are more highly expressed in cells with Psi $\approx 0$. Psi scores of the SE in DYNC1I2 is plot on x-axis and $\log_2(\mathrm{TPM}+1)$ of indicated genes is plot on y-axis.\\
+% \textbf{d.}~Only Genes correlating with Psi is able to seperate two subgroups in NPCs. Left: All genes detected in NPCs fail to distinct the two subgroups. Right: Genes correlating with Psi is able to segregate the two subgroups.\\
+% \textbf{e.}~Tracks from NPCs were shown to illustrate the bimodal inclusion of exon 5. Numbers indicate observed junction reads covering this SE in DYNC1I2.\\
+\textbf{d-f.}~A multimodal MXE event in PKM as an example to dissect MNs into three subgroups.\\
+\textbf{d.}~Genes correlating with Psi of the MXE event containing exon 9 and exon 10 (Figure 1) is able to cluster the MNs into three subgroups. Subgroup 1, mostly composed of outliers identified by $k$-means clustering (Supplementary Figure 2), contain characteristic genes for progenitors. Subgroup 2 and 3 are enriched for neuronal genes. Rows represent the genes and columns represent single cells in MNs. Genes detected in MNs and correlated with the Psi, using an emipircally-defined threshold of Spearman's $R$ greater than two standard deviations away from the mean permuted correlation values. Psi/$\Psi$ ranged from 0 (blue) to 0.5 (yellow) to 1 (red). Black and grey: cells designated as qualified cells versus outlier-cells based on $k$-means clustering. Representative genes enriched in two of the subgroups are highlighted in blue (high with exon 10 inclusion) or red (high with exon 9 inclusion). \\
+\textbf{e.}~Example genes enriched in two of the subgroups of MNs. MAP2 and NRXN1 are more highly expressed in cells with $\Psi \approx 1$; ETV5 and MASTL are more highly expressed in cells with $\Psi \approx 0$. Psi scores of the MXE in PKM is plot on x-axis and $\log_2(\mathrm{TPM}+1)$ of indicated genes is plot on y-axis.\\
+\textbf{f.}~Genes correlating with Psi is able to separate the three subgroups in MNs. Left, PCA using all detected genes in MNs. Right, PCA using genes correlating with Psi.\\
+\textbf{g-k.} A bimodal SE event in SUGT1 as an example to dissect NPCs into two subgroups.\\
+\textbf{g.}~Genes correlating with Psi of the SE event cluster the NPCs into two subgroups. Genes detected in NPCs and correlated with the Psi. Blue: cells with Psi around 0. Red: cells with Psi around 1. Light Blue to yellow: cells with Psi around 0.5. Black and grey: cells designated as qualified cells versus outlier cells based on $k$-means clustering. Representative genes enriched in two of the subgroups are highlighted in blue (high upon exon exclusion) or red (high upon exon inclusion). \\
+\textbf{h.}~Expression of SUGT1 in the three populations.\\
+\textbf{i.}~Psi distribution of a SE event (lower) in SUGT1 in the three populations. This event is excluded in iPSCs, and bimodal in both NPCs and MNs.\\
+\textbf{j.}~Example genes enriched in the two subgroups of NPCs. TBC1D1 and ELOVL4 are more highly expressed in cells with Psi $\approx 1$; MMP16 and TSPAN14 are more highly expressed in cells with Psi ~0. Psi scores of the SE event in SUGT1 is plot on x-axis and $\log_2(\mathrm{TPM}+1)$ of indicated genes is plotted on y-axis.\\
+\textbf{k.}~Only genes correlating with Psi is able to seperate the two subgroups in NPCs. Left: PCA using all detected genes in NPCs. Right: PCA using genes correlating with Psi.\\
+\textbf{l-o.}~PCA using all detected genes in perspective population fail to identify substructures of seemingly homogenous cells (left panel). PCA using gene correlating with each AS events (right panel) is able to identify the delicate substructures of cells.\\
+\textbf{l.}~Bimodal SE event in BRD8 distinguishes iPSC substructure.\\
+\textbf{m.}~Bimodal SE event in MDM4 distinguishes NPC substructure.\\
+\textbf{n.}~Bimodal SE event in MEAF6 distinguishes NPC substructure.\\
+\textbf{o.}~Bimodal SE event in RPN2 distinguishes MN substructure.\\
+}
+\end{minipage}
+
+
+
+\subsection{Supplementary Figure 6}
+% \setcounter{figure}{15}
+
+\begin{minipage}{\textwidth}
+\centering
+\captionof{figure}{\textbf{Overview of \bonvoyage.}\\
+% \textbf{a.}~Barplots of the seed data given to \texttt{bonvoyage} to ensure  the first component is the excluded (near-zero) component.\\
+\textbf{a-d.}~Datasets used for testing \bonvoyage. Uniform random noise was added in 5\% intervals to all datasets, up to 95\% noise, for 100 iterations at each noise level.\\
+\textbf{a.}~Perfect middle, included, and excluded modalities, with added noise. Only 0\%, 25\%, 50\% and 75\% noise levels are shown for brevity. Top, averaged violinplots for all features at a given level of noise. Bottom, waypoint space of all features at the specified noise level.\\
+\textbf{b.}~Maybe middle-included modalities, created with every combination of $0.5$ and $1.0$ values. Only the 0\% noise dataset is shown for brevity. Top, violinplots, bottom, waypoint plots.\\
+\textbf{c.}~Maybe excluded-middle modalities, created with every combination of $0.0$ and $0.5$ values. Only the 0\% noise dataset is shown for brevity. Top, violinplots, bottom, waypoint plots.\\
+\textbf{d.}~Maybe bimodal modalities, created with every combination of $0$ and $1$ values. Only the 0\% noise dataset is shown for brevity. Top, violinplots, bottom, waypoint plots.\\
+% \textbf{e.}~Comparison of voyage magnitude and JSD between ``Maybe everything'' data and a shuffled copy to show the entire distribution.\\
+\textbf{e-f.}~Validation of a SE event in MAP4K4 by smRNA-FISH. \\
+\textbf{e.}~MAP4K4 smRNA-FISH. Left, probe sets are designed for constitutive exons and alternative exon 16. Exon 16 is excluded in iPSCs ($n = 113$, light purple with dashed line) and become more included in MNs ($n = 68$, dark purple with solid outline. Middle, quantitation of normalized inclusion of exon 16. Arrows point out foci overlapped for both constitutive and exon 16 probes. Normalized inclusion ratio is calculated by percentage of e16 probes co-localized with constitutive probes/constitutive probes, and resulting percentage is normalized by 95 percentage of the maximal percentage. \\
+\textbf{f.}~MAP4K4 single-cell RNA-Seq. Left, violinplots percent spliced-in inclusion values, and right, waypoint space of exon 16.\\
+\textbf{g.}~Magnitude of change in waypoint space (voyages) from iPSC to NPC, and iPSC to MN, with a cutoff shown as a black dashed line at 0.2.\\
+\textbf{h.}~Global splicing dynamics between iPSC and MN modalities, visualized as vectors from iPSC to MN  in waypoint space. Underlying data is the same as \textbf{Figure 4a}. Color of arrows are coded based on event modalities in MNs.
+}
+\label{fig:bonvoyage}
+\end{minipage}
+
+
+
+
+\subsection{Supplementary Figure 7}
+\begin{minipage}{\textwidth}
+\centering
+\captionof{figure}{\textbf{Validation of alternative splicing events by sc-qPCR}\\
+\textbf{a-g.} Distribution of alternative exon inclusion by single-cell RNA-Seq for indicated events in EWSR1~(\textbf{a}), DYNC1I2~(\textbf{b}), CLTC/CLCT2~(\textbf{c}), EIF5~(\textbf{d}), THYN1~(\textbf{e}), RBPJ~(\textbf{f}), and EIF4A2~(\textbf{g}), shown in violin plots (left) and in waypoint plots (right). Percent spliced-in (Psi/$\Psi$) is calculated based on single cell RNA-seq data, illustrated in green. Black dots indicate bulk samples (~1,000 cells) for each cell type.\\
+\textbf{h-n.} Distribution of percentage of inclusion by single-cell qPCR of indicated events EWSR1~(\textbf{h}), DYNC1I2~(\textbf{i}), CLTC/CLCT2~(\textbf{j}), EIF5~(\textbf{k}), THYN1~(\textbf{l}), RBPJ~(\textbf{m}), and EIF4A2~(\textbf{n}), based on single cell qPCR shown in violin plot (left) and waypoint plot (right), illustrated in blue.}
+\label{fig:validation}
+\end{minipage}
