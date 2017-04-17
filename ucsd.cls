@@ -527,9 +527,10 @@
 \null\vfill\dsp
 \begin{center}
 {\fmfont
-Copyright \par
+\includegraphics{cc_by.png}\par
+CC-BY \par
 \@author, \@degreeyear\par
-All rights reserved.}
+This work is licensed under a Creative Commons Attribution 4.0 International License. To view a copy of this license, visit \url{http://creativecommons.org/licenses/by/4.0/}}
 \end{center}
 \end{alwayssingle}
 
