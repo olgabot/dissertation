@@ -21,12 +21,22 @@ Currently available tools for AS detection and quanitification have two major pr
 
 \subsection{Algorithm overview}
 
-
-
-
 Broadly, the goal of \outrigger\, is to create a custom, \emph{de novo} alternative splicing annotation by using junction reads and exon definitions to create a exon-junction graph, traversing the graph to find alternative events, and calculate percent spliced-in (Psi/$\Psi$) of the alternative exons.
 
 \paragraph{\texttt{outrigger index}: Create custom alternative splicing annotation.} The following is a narrative describing \textbf{Supplementary Software Fig.~\ref{fig:outrigger_index}a}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=5.8in]{figures/outrigger_index}
+  \caption[Internal steps of indexing via \texttt{outrigger index}: Exons identification and defining alternative events.]{
+  Internal steps of indexing via \texttt{outrigger index}: Exons identification and defining alternative events.\\
+% \captionof{figure}{\textbf{} \\
+\textbf{a.} Internal workings of the indexing step via \texttt{outrigger index}. User-provided inputs junction reads can be either genome-aligned \texttt{.bam} files, the \texttt{.SJ.out.tab} splice junction files from the STAR aligner, or a compiled table in \texttt{.csv} of all junction reads from all samples for the project. Step 1, only junction reads with sufficient depth in a cell/sample are retained. By default, the minimum number of reads is $10$ per cell/sample, which can be modified with the flag \texttt{--min-reads}. Step 2, junction reads are used to identify junction locations, and reads are aggregated across all cells/samples regardless of which cell/sample it came from. Step 3, if there is a ``gap'' between two junctions that is smaller than certain length $X$ (by default, $X=100$ nucleotides but can be modified with the flag \verb!--max-de-novo-exon-length!), then an exon is inserted. Step 4, the identified exons are compared with the annotated exons to obtain the pairwise relationships between exons and junctions. Step 4 outputs a table of ``triples:'' of \texttt{(exon, direction, junction)} encoding the directional relationship between exons and junctions. Step 5, the output tables from step 4 are utilized to connect exons through junctions and creates a graph database. Finally, in Step 6, alternative exons are identified by traversing the graph database. The output of the indexing step run by the command \texttt{outrigger index}, is junction-based, outputting the alternative exon and all possible configurations of flanking exons for each event. For example, on the bottom right, the same skipped exon event using the same alternative junctions, have four possible configurations of flanking exons. They are considered to be the same event, but are reported with all four configurations for the ease-to-use in downstream analysis.\\
+\textbf{b.} Defining alternative events and comparison of biological interpretability of events found by MISO and \outrigger. For a given alternative exon (black box), there can be multiple transcripts corresponding to the alternative exon but with different flanking exons. MISO chooses to define the alternative event using the shortest exons on both sides. Yet, this MISO-defined alternative event may not actually exist as a transcript in the dataset and will be misleading to interpret. For example, attempts to translate such non-existing transcript(s) will be inappropriate. In contrast, \outrigger\, defines the event based on the junctions, and outputs all corresponding flanking exon configurations, thus enabling boader use of the outputs and more relevant biological interpretation. 
+}
+\label{fig:outrigger_index}
+\end{figure}
+
 
 \subparagraph{Inputs.} Two inputs are required for \texttt{outrigger index}: junction counts and gene annotations. The junction counts can be provided in many forms: either \texttt{.bam} \cite{Group:OEYDIUUE} genome alignment files, splice junction count \texttt{.SJ.out.tab} files created by the STAR aligner\cite{Dobin:2013fg}, or a pre-compiled table of samples' junction reads in a \texttt{.csv} format. The gene annotations can be provided in \texttt{.gtf} or \texttt{.gff} format.
 
@@ -151,6 +161,18 @@ In the case of SE events, the exon will have $\Psi = \text{NA}$ for the cell wit
 
 For MXE events, if each of the four junctions was observed independently in a different cell, then all of the cells will have $\Psi = \text{NA}$ for that splicing event since there are no cells which have sufficient reads on all junctions of either isoform.
 
+\begin{figure}
+  \centering
+  \includegraphics[width=5.8in]{figures/outrigger_validate}
+  \caption[\outrigger\, validation and pathological cases.]{
+  \outrigger\, validation and pathological cases.\\
+\textbf{a.}~Validation via \texttt{outrigger validate}: Removal of alternative events with introns lacking consensus splice sites. In this optional step, exons with flanking introns lacking known splice site motifs are removed. This is configurable. By default, the valid splice sites are specified as, \texttt{--valid-splice-sites GT/AG,GC/AG,AT/AC}, but can be any pair of two nucleotides.\\
+\textbf{b.}~Possible pathological cases of \texttt{outrigger}. These ``Franken-events'' consist of junctions that were observed in independent samples. At the indexing step, aggregated reads from multiple cells/samples are considered to construct an index of all junctions to maximize the number of AS events. Yet, at the Psi/$\Psi$ calculation step, in each individual cell/sample, insufficient reads may be observed for certain junction resulting in $\Psi=\text{NA}$ in some cells/samples for the same event. Top, skipped exons, if each junction is observed only in one cell, the cell with the exclusion junction is assigned a $\Psi=0$ while the remaining cells are assigned as $\Psi=\text{NA}$. Bottom, mutually exclusive exons, $\Psi=\text{NA}$ for all 4 cells, as there is insufficient evidence of exon inclusion or exclusion in any one cell. Thus, the number of detected events output by \texttt{outrigger index} can greatly overestimate the number of valid events in the dataset found by \texttt{outrigger psi}.
+}
+\label{fig:outrigger_validate_frankenevents}
+\end{figure}
+
+
 
 \paragraph{\texttt{outrigger psi}: Calculate percent spliced-in of alternative exons}
 
@@ -170,6 +192,20 @@ To calculate percent spliced-in (Psi/$\Psi$) of a potentially alternative exon i
 \end{multicols}
 
 Multiple validation steps were incorporated to ensure that the junction reads observed in each sample are consistent with the type of splicing event annotated by \outrigger. This process is described in \textbf{Supplementary Software .~\ref{fig:outrigger_psi}}. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=5.8in]{figures/outrigger_psi}
+  \caption[Cases created by percent spliced-in calculation via the command \texttt{outrigger psi}.]{
+  Cases created by percent spliced-in calculation via the command \texttt{outrigger psi}.\\
+% \captionof{figure}{\textbf{} 
+The table describes the 11-step sequential logic of \outrigger\, to reject an event in a cell/sample based on that cell/sample's junction reads. If an event reaches a $\Psi=\text{NA}$ case, then it is rejected from that sample, otherwise, it continues through the cases. If the event is rejected, then it is assigned $\Psi = \text{NA}$, if it is not rejected, then it gets a $0\leq \Psi \leq 1$ value based on the junction reads.\\
+Strict evaluation of percent spliced-in (Psi/$\Psi$). To compute the percent spliced-in (Psi/$\Psi$) of skipped exon (SE) and mutually exclusive exons (MXE) alternative events during the execution of the command \texttt{outrigger psi}, we use $\Psi= \frac{\text{inclusion reads}}{\text{total reads}}$. We represent the number of reads spanning the junction between exon$_i$ and exon$_j$ as $r_{i,j}$.
+% \textbf{g.}~Left, Model of exons, junctions and reads for an SE event. Right top, logic of whether to calculate $\Psi$ for an event in a sample. for SE, to avoid mis-annotated events, we check for the following logic to be fulfilled, specifically require for \emph{both} inclusion reads to be greater than the minimum, or for the exclusion junction read number to be greater than the minimum reads, as shown. Right bottom, we then calculate $\Psi$ as shown.\\
+% \textbf{h.}~Left, Model of exons, junctions, and reads for an MXE event. Right top, logic of whether the junctions in a sample are consistent with an MXE event. For a particular sample there are one or more reads between exons 2 and 3 ($r_{2,3} > 0$), then this is evidence for a twin cassette event, not an MXE event, then for this sample $\Psi$ is not calculated for this event. To avoid improperly annotated events, we use only events with enough reads on all inclusion or exclusion junctions, as shown. Right bottom, we then calculate $\Psi$.
+}
+\label{fig:outrigger_psi}
+\end{figure}
 
 \begin{description}
 	\item[Case 1: Incompatible junctions with sufficient reads.] This step checks whether the junction reads are compatible with a MXE event, or rather a twin cassette event. Specifically, evidence of  $r_{2,3} > r_{\min}$ or $r_{1,4} > r_{\min}$ suggests this junction is a twin cassette event but not an MXE event. In such cases, $\Psi = \text{NA}$. As described in \texttt{outrigger index}, the minimum number of reads is user-defined, for example to 37 with \texttt{--min-reads~37}. 
@@ -271,6 +307,28 @@ In comparison to the popular splicing program MISO\cite{Katz:2010iv}, \outrigger
 
 A large group of false positives that are correctly rejected by \outrigger\, are Case 1, where only incompatible junctions present sufficient reads. For example, when twin cassette events are annotated as MXE events and the data indicates inclusion of both alternative exons, MISO will calculate $\Psi$ as 0.5. Because MISO uses a prior of $\Psi=0.5$ and resamples the data to calculate $\Psi$. In such a case, MISO is never convinced that $\Psi$ should be towards 1 or 0 and remains at $\Psi~0.5$ (\textbf{Supplementary Software Fig.~\ref{fig:miso}a}). %As a result, these false positive MXE events make up a far larger proportion of the middle modality when using MISO data than with \outrigger\, (\textbf{Supplementary Software Fig.~\ref{fig:miso}e-f}).
 
+\begin{figure}
+  \centering
+  \includegraphics[width=5.8in]{figures/invalid_miso}
+  \caption[Examples of inconsistencies in MISO's estimation with single-cell data.]{Examples of inconsistencies in MISO's estimation with single-cell data.\\
+% \captionof{figure}{\textbf{}\\
+% \textbf{Supplementary Fig. 1: Examples of inconsistencies in MISO's estimation with single-cell data.}\\
+\textbf{a-c. Representative examples of SE and MXE AS events measured by MISO, but were unsupported with visual inspection on IGV browser, and were disqualified by \outrigger.} To identify SE and MXE events, \outrigger\, constructs a \emph{de novo} splicing index based on the junction reads in all libraries in the dataset (see details in \textbf{Supplementary Software Figs. \ref{fig:outrigger_index,fig:outrigger_psi,fig:outrigger_validate_frankenevents}}). The following examples are not considered by \outrigger as true SE or MXE events, therefore annotated as NA. Note, MISO does not estimate modality for each event, \anchor\, (see details in \textbf{Supplementary Fig.~\ref{fig:anchor}}) was used to estimate modality.\\
+\textbf{a.} Top, a MISO-annotated MXE event in ARF4 with MISO estimated $\Psi$s $\sim0.5$ and classified as ``middle'' modality in each of iPSC, NPC, and MN by \anchor. Yet, in the IGV browser (bottom), this event appears as a twin cassette event, where both exons 2 and 3 are included, indicating that at least in our dataset this event is not consistent with the MISO annotation. Outrigger disqualifies this event as a MXE and assign NA (top left).\\
+\textbf{b.} Top, a MISO-annotated SE event in CLF1 with MISO estimated $\Psi$s ranging from $0.1$ to $0.6$ and is classified as a ``middle'' modality event by \anchor\, in each of iPSC, NPC, and MN.  Yet, in the IGV browser (bottom), exon 1 for this annotation is not covered at all. Given the data, outrigger\ do not consider this as a bona fide SE event and assign NA to this event.\\
+\textbf{c.} Top, a MISO-annotated MXE event in AHSA1 with a wide range of MISO calculated $\Psi$s and is classified as the ``multimodal'' modality in each of iPSCs, NPC, and MN populations by \anchor. Bottom, in the IGV browser. Exons 2 and 3 are the annotated alternative exons for MXE, however, another two well-covered exons between exon 2 and 3 were observed and one extra exon between exon 3 and 4, which disqualify this event as an MXE event. Furthermore, when both exon 2 and 3 are included, MISO estimated $\Psi$ scores are closer to 1 instead of around $0.5$, as was seen in (\textbf{a}). Thus, outrigger rejects this as MXE and assign NA.\\
+\textbf{d.}~Using \outrigger\,'s strict rules on MISO annotations, the majority (51\%) of the data generated by MISO was rejected by \outrigger\, (left). Right, using the exact same annotation from MISO, \outrigger\, 22\% of events found by \outrigger\, had too wide of a confidence interval ($>0.4$) by MISO.\\
+\textbf{e.}~Heatmap comparing the numbers and percentages of alternative events that were within $|\Delta\Psi| < 0.2$, switched to exactly 1 or 0 in \outrigger, were NA in either MISO or \outrigger, or were in another case.\\
+\textbf{f.}~Barplot of the number of cases found only in MISO (orange) and rejected as NA by \outrigger, and of the cases found only by \outrigger (green) and considered to have too wide of a confidence interval by MISO.\\
+% \textbf{(d-e). Comparison of MISO and \outrigger\, in description of gobal landscape of AS in single cells.} Due to the discrepancies between MISO's prior of $\Psi=0.5$ and annotations in our single-cell data, the distribution of $\Psi$ and the number of events categorized to each modality differ and lead to conflicting interpretations.\\
+% \textbf{d.} Top, lavalamp plot of 12,894 SE and MXE splicing events identified by \outrigger. Bottom, lavalamp plot of 19,662 splicing events identified by MISO, with a confidence interval $<0.4$. MISO identifies more events, however, many of them appeared to be mis-identified as shown in examples (\textbf{a-c}). Additionaly, MISO estimated $\Psi$s tend to be distributed more boardly in comparison to \outrigger's, probably due to MISO's prior of $\Psi=0.5$.\\
+% \textbf{d.} Left, heatmap of the number of events found in each modality, for each celltype, by MISO. Right, heatmap of the number of events found in each modality, for each celltype, by \outrigger. MISO identifies one to three orders of magnitude more events in both middle and multimodal modalities, most likely due to MISO's prior of $\Psi=0.5$ and discrepant annotations.\\
+% \textbf{e.} Top, the percentage of exons in each modality (left) and the proportion of SE and MXE events (right) that were identified by \outrigger. Bottom, the percentage of exons in each modality (left) and the proportion of SE and MXE events (right) that were identified by MISO. MISO tends to identify more MXE events or events assigned as ``middle'', probably due to the inconsistency of MISO annotation with our datasets as illustrated in (\textbf{a-c}). MISO also identifies more events assigned as ``multimodal'' modality likely due to a bias against perfect inclusion ($\Psi=1$) or exclusion ($\Psi=0$), resulting in fewer events with $\Psi=1$ and $\Psi=0$ it calculated as illustrated in (\textbf{c}).\\
+To summarize, \outrigger\, follows strict rules to identify alternative splicing (\textbf{Supplementary Software \ref{fig:outrigger_index,fig:outrigger_psi,fig:outrigger_validate_frankenevents}}) and provides a $\Psi$ distribution more localized at the extremes of $\Psi=0$ and $\Psi=1$. Although \outrigger\, may identify fewer events, they are true SE and MXE events.
+}
+\label{fig:miso}
+\end{figure}
+
 
 The majority of the false positives are Case 4, where only one junction has sufficient reads. As MISO counts both junctions to calculate $\Psi$, shown in \textbf{Supplementary Software Fig.~\ref{fig:miso}b-c}, many of the events are not covered on both sides of the alternative exons, which may suggest the events are not true SE events, but rather alternative first exon events, for instance. 
 
@@ -350,6 +408,18 @@ Where $M_i^{(m)}$ is the model of interest (e.g. $M_i^{(\mathrm{bimodal})}$) and
 
 The \0 and \1 modalities vary only one parameter at a time, whereas middle and bimodal modalities vary both $\alpha$ and $\beta$ simoutanously. Models with more parameters are more likely to fit, thus we fit to the one-parameter models first, assessing whether $K > K_{\mathrm{cutoff}}$ for either \0 or \1. No distribution can fit both \0 and \1 modalities, thus it is assigned to the modality with highest $K$. Next, the distribution is fitted to the two-parameter bimodal and middle models, checking if $K > K_{\mathrm{cutoff}}$. If neither modality applies, we assign the modality to \emph{multimodal} (\textbf{Figure~2c}). 
 
+\begin{figure}
+  \centering
+  \includegraphics[width=5.8in]{figures/anchor_parameterization}
+  \caption[Overview of \anchor\, parameterization of the Beta distribution.]{
+  Overview of \anchor\, parameterization of the Beta distribution.\\
+\textbf{a.}~Top, equation for the Beta distribution of the random variable $x$ with parameters $\alpha, \beta > 0$. Bottom left, equation for the mean ($\mu$) of the Beta distribution as a function of its parameters. Bottom right, equation for the variance ($\sigma^2$) of the Beta distribution as a function of parameters.\\
+\textbf{b.}~Cartoon of valid values of $\alpha$ and $\beta$ parameters of Beta distribution, showing how the space is partitioned by the modalities.\\
+\textbf{c.}~Violinplots representing the four ideal modalities, plus the null ``multimodal'' distribution. Each modality is annotated with examples of four cells representing within-cell distributions of included (dark grey) and excluded (light grey) transcripts, and the corresponding parameters of the Beta distribution.\\
+\textbf{d.}~Violinplots of 1 million random samples of the family of Beta distributions specified by the $\alpha$ and $\beta$ ($x$ tick labels) parameterization of the four modalities: excluded, bimodal, included, and middle.}
+\label{fig:anchor_parameterization}
+\end{figure}
+
 
 As exact $0$ and $1$ are not in the range of the Beta distribution, we implement this model selection by adding a small number ($0.001$) to $0$ and subtracting this small number from $1$. Thus, we approximate the data-derived distribution from the invalid closed interval [0, 1] to the valid open interval of (0, 1).
 
@@ -362,6 +432,19 @@ We optimized the algorithm parameters using test datasets and visually inspectin
 \label{sec:anchor_perfect_modalities}
 
 To test the limits of \texttt{anchor}, we simulated perfectly \0, middle, \1, and bimodal distribution, added uniform random noise with 100 iterations, and estimated modality at each noise level with iteration (\textbf{Supplementary Fig.~\ref{fig:anchor}a}). As expected, the most frequently predicted modality was ``multimodal,'' since the dataset was created from randomly added noise (\textbf{Supplementary Fig.~\ref{fig:anchor}b}). The next frequent modality was bimodal, followed by a tie with excluded and included, and the least frequent one is middle modality. We found that these parameterizations can accurately predict modality with up to $35\%$ noise added to the middle modality, $50\%$ noise added to excluded and included modalities, and up to $70\%$ noise added to the bimodal modality(\textbf{Supplementary Fig.~\ref{fig:anchor}d}). By visual inspection of distributions fit best or worst to each modality (\textbf{Supplementary Software Fig.~\ref{fig:anchor_best_worst}a}), we observed that the bimodal distributions are sufficiently different from other parameterizations, demonstrating the robustness of the algorithm.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=5.8in]{figures/anchor_best_worst}
+  \caption[Best and worst fitting modality data using \anchor.]{
+  Best and worst fitting modality data using \anchor.\\
+Left, 10 events with largest Bayes Factor, $K$ (best fit) from the assigned modality. Right, 10 events with smallest Bayes Factor, $K$ (worst fit) from their assigned modality. For multimodal, as there is no fit, this simply shows 20 random events.\\
+\textbf{a.}~Bayesian \anchor\, method on ``Perfect modalities'' dataset.\\
+\textbf{b.}~Bayesian \anchor\, method on ``Maybe bimodals'' dataset.
+}
+\label{fig:anchor_best_worst}
+\end{figure}
+
 
 
 \paragraph{Dataset 2: ``Maybe Bimodals'' with noise}
@@ -435,96 +518,11 @@ A key aspect of the waypoint space is that while changes from exclusion to inclu
 
 As there exist many methods for comparing distributions, we will show that the magnitude of change obtained from \texttt{bonvoyage} is comparable to other metrics for assessing changes in distribution. In particular, we will show the metrics within each modality, and across modalities, compared to Jensen-Shannon Divergence\cite{Anonymous:2011vn} (JSD) in (\textbf{Supplementary Fig.~\ref{fig:bonvoyage}e}). While JSD is more sensitive to slight changes in distribution (their scatterplots are skewed towards the right), it does not also encode directionality of change. Thus, \texttt{bonvoyage} offers a unique perspective on how to interpret changes in distribution.
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
-  \caption[Examples of inconsistencies in MISO's estimation with single-cell data.]{Examples of inconsistencies in MISO's estimation with single-cell data.\\
-% \captionof{figure}{\textbf{}\\
-% \textbf{Supplementary Fig. 1: Examples of inconsistencies in MISO's estimation with single-cell data.}\\
-\textbf{a-c. Representative examples of SE and MXE AS events measured by MISO, but were unsupported with visual inspection on IGV browser, and were disqualified by \outrigger.} To identify SE and MXE events, \outrigger\, constructs a \emph{de novo} splicing index based on the junction reads in all libraries in the dataset (see details in \textbf{Supplementary Software Figs. \ref{fig:outrigger_index,fig:outrigger_psi,fig:outrigger_validate_frankenevents}}). The following examples are not considered by \outrigger as true SE or MXE events, therefore annotated as NA. Note, MISO does not estimate modality for each event, \anchor\, (see details in \textbf{Supplementary Fig.~\ref{fig:anchor}}) was used to estimate modality.\\
-\textbf{a.} Top, a MISO-annotated MXE event in ARF4 with MISO estimated $\Psi$s $\sim0.5$ and classified as ``middle'' modality in each of iPSC, NPC, and MN by \anchor. Yet, in the IGV browser (bottom), this event appears as a twin cassette event, where both exons 2 and 3 are included, indicating that at least in our dataset this event is not consistent with the MISO annotation. Outrigger disqulifies this event as a MXE and assign NA (top left).\\
-\textbf{b.} Top, a MISO-annotated SE event in CLF1 with MISO estimated $\Psi$s ranging from $0.1$ to $0.6$ and is classified as a ``middle'' modality event by \anchor\, in each of iPSC, NPC, and MN.  Yet, in the IGV browser (bottom), exon 1 for this annotation is not covered at all. Given the data, outrigger\ do not consider this as a bona fide SE event and assign NA to this event.\\
-\textbf{c.} Top, a MISO-annotated MXE event in AHSA1 with a wide range of MISO calculated $\Psi$s and is classified as the ``multimodal'' modality in each of iPSCs, NPC, and MN populations by \anchor. Bottom, in the IGV browser. Exons 2 and 3 are the annotated alternative exons for MXE, however, another two well-covered exons between exon 2 and 3 were observed and one extra exon between exon 3 and 4, which disqualify this event as an MXE event. Furthermore, when both exon 2 and 3 are included, MISO estimated $\Psi$ scores are closer to 1 instead of around $0.5$, as was seen in (\textbf{a}). Thus, outrigger rejects this as MXE and assign NA.\\
-\textbf{d.}~Using \outrigger\,'s strict rules on MISO annotations, the majority (51\%) of the data generated by MISO was rejected by \outrigger\, (left). Right, using the exact same annotation from MISO, \outrigger\, 22\% of events found by \outrigger\, had too wide of a confidence interval ($>0.4$) by MISO.\\
-\textbf{e.}~Heatmap comparing the numbers and percentages of alternative events that were within $|\Delta\Psi| < 0.2$, switched to exactly 1 or 0 in \outrigger, were NA in either MISO or \outrigger, or were in another case.\\
-\textbf{f.}~Barplot of the number of cases found only in MISO (orange) and rejected as NA by \outrigger, and of the cases found only by \outrigger (green) and considered to have too wide of a confidence interval by MISO.\\
-% \textbf{(d-e). Comparison of MISO and \outrigger\, in description of gobal landscape of AS in single cells.} Due to the discrepancies between MISO's prior of $\Psi=0.5$ and annotations in our single-cell data, the distribution of $\Psi$ and the number of events categorized to each modality differ and lead to conflicting interpretations.\\
-% \textbf{d.} Top, lavalamp plot of 12,894 SE and MXE splicing events identified by \outrigger. Bottom, lavalamp plot of 19,662 splicing events identified by MISO, with a confidence interval $<0.4$. MISO identifies more events, however, many of them appeared to be mis-identified as shown in examples (\textbf{a-c}). Additionaly, MISO estimated $\Psi$s tend to be distributed more boardly in comparison to \outrigger's, probably due to MISO's prior of $\Psi=0.5$.\\
-% \textbf{d.} Left, heatmap of the number of events found in each modality, for each celltype, by MISO. Right, heatmap of the number of events found in each modality, for each celltype, by \outrigger. MISO identifies one to three orders of magnitude more events in both middle and multimodal modalities, most likely due to MISO's prior of $\Psi=0.5$ and discrepant annotations.\\
-% \textbf{e.} Top, the percentage of exons in each modality (left) and the proportion of SE and MXE events (right) that were identified by \outrigger. Bottom, the percentage of exons in each modality (left) and the proportion of SE and MXE events (right) that were identified by MISO. MISO tends to identify more MXE events or events assigned as ``middle'', probably due to the inconsistency of MISO annotation with our datasets as illustrated in (\textbf{a-c}). MISO also identifies more events assigned as ``multimodal'' modality likely due to a bias against perfect inclusion ($\Psi=1$) or exclusion ($\Psi=0$), resulting in fewer events with $\Psi=1$ and $\Psi=0$ it calculated as illustrated in (\textbf{c}).\\
-To summarize, \outrigger\, follows strict rules to identify alternative splicing (\textbf{Supplementary Software \ref{fig:outrigger_index,fig:outrigger_psi,fig:outrigger_validate_frankenevents}}) and provides a $\Psi$ distribution more localized at the extremes of $\Psi=0$ and $\Psi=1$. Although \outrigger\, may identify fewer events, they are true SE and MXE events.
-}
-\label{fig:miso}
-\end{figure}
-
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
-  \caption[Internal steps of indexing via \texttt{outrigger index}: Exons identification and defining alternative events.]{
-  Internal steps of indexing via \texttt{outrigger index}: Exons identification and defining alternative events.\\
-% \captionof{figure}{\textbf{} \\
-\textbf{a.} Internal workings of the indexing step via \texttt{outrigger index}. User-provided inputs junction reads can be either genome-aligned \texttt{.bam} files, the \texttt{.SJ.out.tab} splice junction files from the STAR aligner, or a compiled table in \texttt{.csv} of all junction reads from all samples for the project. Step 1, only junction reads with sufficient depth in a cell/sample are retained. By default, the minimum number of reads is $10$ per cell/sample, which can be modified with the flag \texttt{--min-reads}. Step 2, junction reads are used to identify junction locations, and reads are aggregated across all cells/samples regardless of which cell/sample it came from. Step 3, if there is a ``gap'' between two junctions that is smaller than certain length $X$ (by default, $X=100$ nucleotides but can be modified with the flag \texttt{--max-de-novo-exon-length}), then an exon is inserted. Step 4, the identfied exons are compared with the annotated exons to obtain the pairwise relationships between exons and junctions. Step 4 outputs a table of ``triples:'' of \texttt{(exon, direction, junction)} encoding the directional relationship between exons and junctions. Step 5, the output tables from step 4 are utilized to connect exons through junctions and creates a graph database. Finally, in Step 6, alternative exons are identified by traversing the graph database. The output of the indexing step run by the command \texttt{outrigger index}, is junction-based, outputting the alternative exon and all possible configurations of flanking exons for each event. For example, on the bottom right, the same skipped exon event using the same alternative junctions, have four possible configurations of flanking exons. They are considered to be the same event, but are reported with all four configurations for the ease-to-use in downstream analysis.\\
-\textbf{b.} Defining alternative events and comparison of biological interpretability of events found by MISO and \outrigger. For a given alternative exon (black box), there can be multiple transcripts corresponding to the alternative exon but with different flanking exons. MISO chooses to define the alternative event using the shortest exons on both sides. Yet, this MISO-defined alternative event may not actually exist as a transcript in the dataset and will be misleading to interpret. For example, attempts to translate such non-existing transcript(s) will be inappropriate. In contrast, \outrigger\, defines the event based on the junctions, and outputs all corresponding flanking exon configurations, thus enabling boader use of the outputs and more relevant biological interpretation. 
-}
-\label{fig:outrigger_index}
-\end{figure}
 
 
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
-  \caption[\outrigger\, validation and pathological cases.]{
-  \outrigger\, validation and pathological cases.\\
-\textbf{a.}~Validation via \texttt{outrigger validate}: Removal of alternative events with introns lacking consensus splice sites. In this optional step, exons with flanking introns lacking known splice site motifs are removed. This is configurable. By default, the valid splice sites are specified as, \texttt{--valid-splice-sites GT/AG,GC/AG,AT/AC}, but can be any pair of two nucleotides.
-\textbf{b.}~Possible pathological cases of \texttt{outrigger}. These ``Franken-events'' consist of junctions that were observed in independent samples. At the indexing step, aggregated reads from multiple cells/samples are considered to construct an index of all junctions to maximize the number of AS events. Yet, at the Psi/$\Psi$ calculation step, in each individual cell/sample, insufficient reads may be observed for certain junction resulting in $\Psi=\text{NA}$ in some cells/samples for the same event. Top, skipped exons, if each junction is observed only in one cell, the cell with the exclusion junction is assigned a $\Psi=0$ while the remaining cells are assigned as $\Psi=\text{NA}$. Bottom, mutually exclusive exons, $\Psi=\text{NA}$ for all 4 cells, as there is insufficient evidence of exon inclusion or exclusion in any one cell. Thus, the number of detected events output by \texttt{outrigger index} can greatly overestimate the number of valid events in the dataset found by \texttt{outrigger psi}.
-}
-\label{fig:outrigger_validate_frankenevents}
-\end{figure}
 
 
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
-  \caption[Cases created by percent spliced-in calculation via the command \texttt{outrigger psi}.]{
-  Cases created by percent spliced-in calculation via the command \texttt{outrigger psi}.\\
-% \captionof{figure}{\textbf{} 
-The table describes the 11-step sequential logic of \outrigger\, to reject an event in a cell/sample based on that cell/sample's junction reads. If an event reaches a $\Psi=\text{NA}$ case, then it is rejected from that sample, otherwise, it continues through the cases. If the event is rejected, then it is assigned $\Psi = \text{NA}$, if it is not rejected, then it gets a $0\leq \Psi \leq 1$ value based on the junction reads.\\
-Strict evalution of percent spliced-in (Psi/$\Psi$). To compute the percent spliced-in (Psi/$\Psi$) of skipped exon (SE) and mutually exclusive exons (MXE) alternative events during the execution of the command \texttt{outrigger psi}, we use $\Psi= \frac{\text{inclusion reads}}{\text{total reads}}$. We represent the number of reads spanning the junction between exon$_i$ and exon$_j$ as $r_{i,j}$.
-% \textbf{g.}~Left, Model of exons, junctions and reads for an SE event. Right top, logic of whether to calculate $\Psi$ for an event in a sample. for SE, to avoid mis-annotated events, we check for the following logic to be fulfilled, specifically require for \emph{both} inclusion reads to be greater than the minimum, or for the exclusion junction read number to be greater than the minimum reads, as shown. Right bottom, we then calculate $\Psi$ as shown.\\
-% \textbf{h.}~Left, Model of exons, junctions, and reads for an MXE event. Right top, logic of whether the junctions in a sample are consistent with an MXE event. For a particular sample there are one or more reads between exons 2 and 3 ($r_{2,3} > 0$), then this is evidence for a twin cassette event, not an MXE event, then for this sample $\Psi$ is not calculated for this event. To avoid improperly annotated events, we use only events with enough reads on all inclusion or exclusion junctions, as shown. Right bottom, we then calculate $\Psi$.
-}
-\label{fig:outrigger_psi}
-\end{figure}
-
-
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
-  \caption[Overview of \anchor\, parameterization of the Beta distribution.]{
-  Overview of \anchor\, parameterization of the Beta distribution.\\
-\textbf{a.}~Top, equation for the Beta distribution of the random variable $x$ with parameters $\alpha, \beta > 0$. Bottom left, equation for the mean ($\mu$) of the Beta distribution as a function of its parameters. Bottom right, equation for the variance ($\sigma^2$) of the Beta distribution as a function of parameters.\\
-\textbf{b.}~Cartoon of valid values of $\alpha$ and $\beta$ parameters of Beta distribution, showing how the space is partitioned by the modalities.\\
-\textbf{c.}~Violinplots representing the four ideal modalities, plus the null ``multimodal'' distribution. Each modality is annotated with examples of four cells representing within-cell distributions of included (dark grey) and excluded (light grey) transcripts, and the corresponding parameters of the Beta distribution.\\
-\textbf{d.}~Violinplots of 1 million random samples of the family of Beta distributions specified by the $\alpha$ and $\beta$ ($x$ tick labels) parameterization of the four modalities: excluded, bimodal, included, and middle.}
-\label{fig:anchor_parameterization}
-\end{figure}
-
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
-  \caption[Best and worst fitting modality data using \anchor.]{
-  Best and worst fitting modality data using \anchor.\\
-Left, 10 events with largest Bayes Factor, $K$ (best fit) from the assigned modality. Right, 10 events with smallest Bayes Factor, $K$ (worst fit) from their assigned modality. For multimodal, as there is no fit, this simply shows 20 random events.\\
-\textbf{a.}~Bayesian \anchor\, method on ``Perfect modalities'' dataset.\\
-\textbf{b.}~Bayesian \anchor\, method on ``Maybe bimodals'' dataset.
-}
-\label{fig:anchor_best_worst}
-\end{figure}
 
 
 

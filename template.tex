@@ -146,6 +146,27 @@
 \usepackage{newpxmath}
 
 
+%% --- Begin Natbib --- %%
+% Natbib doesn't work with ShareLatex, they recommend BibLatex instead, because the compilation is built-in to BibLatex but with BibTex you have to separately compile the .bbl file
+% cite package, to clean up citations in the main text. Do not remove.
+% \usepackage[superscript]{cite}
+% \usepackage[super,sort]{natbib}
+%% --- End Natbib --- %%
+
+%% --- Begin BibLatex --- %%
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage[
+backend=biber,
+% style=alphabetic,
+sorting=ynt
+]{biblatex}
+ 
+\addbibresource{chapter1.bib}
+\addbibresource{refs.bib}
+%% --- End BibLatex ---- %%
+
 % Directory trees
 \usepackage{dirtree}
 
@@ -179,6 +200,16 @@
 % \DeclareSIUnit{\Molar}{M} 
 % \DelcareSIUnit{\uM}{\micro\Molar} 
 
+% % --- Begin use with Multibib ----
+% \usepackage[resetlabels]{multibib}
+% \newcites{book,article,poster}{{Books},{Journal Articles},{Conference Posters}}
+
+% % Number the Publications
+% \makeatletter
+% \renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}
+% \makeatother
+% \renewcommand*{\bibliographyitemlabel}{[\arabic{enumiv}]}
+% % --- END use with Multibib ---
 
 
 %% INDEX
@@ -334,14 +365,18 @@
 % \printindex %% Uncomment to display the index
 % \nocite{}  %% Put any references that you want to include in the bib 
 %               but haven't cited in the braces.
-\bibliographystyle{natbib}  %% This is just my personal favorite style. 
+% \bibliographystyle{natbib}  %% This is just my personal favorite style. 
 %                              There are many others.
 %\setlength{\bibleftmargin}{0.25in}  % indent each item
 %\setlength{\bibindent}{-\bibleftmargin}  % unindent the first line
 %\def\baselinestretch{1.0}  % force single spacing
 %\setlength{\bibitemsep}{0.16in}  % add extra space between items
-\bibliography{refs}  %% This looks for the bibliography in template.bib 
+% \bibliography{chapter1,refs}  %% This looks for the bibliography in template.bib 
 %                          which should be formatted as a bibtex file.
 %                          and needs to be separately compiled into a bbl file.
+
+%% --- Using BibLaTex instead of BibTex --- %%
+\printbibliography
+
 \end{document}
 

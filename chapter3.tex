@@ -1,8 +1,8 @@
-\chapter{Single-cell alternative splicing analysis with Expedition reveals splicing dynamics during neuron differentiation}
+\chapter{Single-cell alternative splicing analysis with \emph{Expedition} reveals splicing dynamics during neuron differentiation}
 
 
 \section{Introduction}
-Alternative splicing (AS) generates protein diversity in human cells as over 90\% of multi-exon genes are alternatively spliced (Johnson et al., 2003; Pan et al., 2008; Takeda et al., 2010; Wang et al., 2008). Transcriptome profiling by sequencing (RNA-seq) has emerged as a powerful technology to detect and quantify AS in tissue or cell populations (Barbosa-Morais et al., 2012; Merkin et al., 2012; Wang et al., 2008). Neural tissues have especially high levels of alternative splicing, though it is unclear whether it is a result of high levels splicing within each cell or heterogeneity of cells, impeding precise understanding of AS regulation and dynamics. While single-cell technologies (scRNA-seq) can, in principle, address the issue of heterogeneity, and AS variation has been observed in single-cells (Marinov et al., 2014; Shalek et al., 2013; Welch et al., 2016), we still do not know if variable AS events are evolutionarily or biologically distinct from less variable events. Robust computational methods are needed to fully characterize the complexity of AS at the whole transcriptome level in single cells.
+Alternative splicing (AS) generates protein diversity in human cells as over 90\% of multi-exon genes are alternatively spliced \cite{Johnson:2003kh,Pan:2008jq,Takeda:2009gl,Wang:2008gt}. Transcriptome profiling by sequencing (RNA-seq) has emerged as a powerful technology to detect and quantify AS in tissue or cell populations (Barbosa-Morais et al., 2012; Merkin et al., 2012; Wang et al., 2008). Neural tissues have especially high levels of alternative splicing, though it is unclear whether it is a result of high levels splicing within each cell or heterogeneity of cells, impeding precise understanding of AS regulation and dynamics. While single-cell technologies (scRNA-seq) can, in principle, address the issue of heterogeneity, and AS variation has been observed in single-cells (Marinov et al., 2014; Shalek et al., 2013; Welch et al., 2016), we still do not know if variable AS events are evolutionarily or biologically distinct from less variable events. Robust computational methods are needed to fully characterize the complexity of AS at the whole transcriptome level in single cells.
 Previous studies that investigated AS in single cells were limited to only a few examples (Shalek et al., 2013; Waks et al., 2011) or simply discovered novel splice junctions (Marinov et al., 2014). However, the key challenge in single-cell AS analysis is not only to measure, but to describe variation in AS within a group of single cells, enabling the discovery of differential AS distribution between populations. Most computational tools for AS were developed for bulk RNA-sequencing and were designed for pairwise comparisons to compute relative differences, such as DEXSeq (Anders et al., 2012) and rMATs (Shen et al., 2014). Yet, for single cells, calculating all pairwise comparisons are impractical. Additionally, many algorithms do not consider the compatibility of splicing annotation with the observed data. Algorithms, such as MISO (Katz et al., 2010), utilize probabilistic priors which can assign AS events percent-spliced-in (Psi) values near the prior (Supplementary Software Figure 1), resulting in false positive AS events and also prevent meaningful estimation of splicing variation. Other available methods that reconstruct isoforms or estimate read dispersion (Cufflinks, TIGAR2, WemIQ) (Nariai et al., 2013; Trapnell et al., 2012; Zhang et al., 2015) are not appropriate due to the current low molecular capture rate and uneven transcript coverage in single cell RNA-seq datasets. Thus, the lack of computational tools to describe the distribution of AS limits single cell AS analysis to only a few cells or a few events and prevents us from applying systems biology methods to understand AS complexity on a global scale. Similarly, inability to visualize distribution changes from one cell-type/state to another impedes identification of dynamic AS events subjected to specific regulation.
 Three key concepts need to be addressed in single-cell AS analyses: (1) implementation of strict rules to identify AS events and ensure compatibility of the annotation and observed data, (2) description of variation and distribution of AS events and (3) visualization of AS distribution and its dynamics from one cell-type or state to another. Therefore, we developed Expedition, a suite of algorithms integrated in a complete software package. Expedition can identify and quantify AS events in scRNA-seq data (outrigger), categorize splicing modalities (anchor) and visualize modality dynamics (bonvovage). To illustrate its utility we sequenced and analyzed single cells from induced pluripotent stem cells (iPSCs), in vitro differentiated neural progenitor cells (NPCs) and motor neurons (MNs). AS events were quantitated and classified into five distinct modalities. Up to 75\% of AS events exhibit unimodality, where exons are primarily included or excluded with low variance in each cell population. Only ~20\% of AS events are highly varying, composed primarily by bimodal AS events. Interestingly, these bimodal AS events account for essentially all AS events that change modalities during neuronal differentiation, thus representing cell-type specific splicing. Furthermore, we demonstrate that individual bimodal and multimodal events are able to reveal the substructure of a cell population that was undetected by global gene expression analysis. Finally, our study revealed that highly variance AS events exhibit evolutionary and sequence characteristics distinct from unimodal events, illustrating the importance of single-cell analysis of RNA processing.
 
@@ -16,7 +16,7 @@ To identify and quantify alternative splicing (AS) events in scRNA-seq, we devel
 \subsection{Assignment of single cell alternative splicing events to modalities using anchor}
 To categorize the distribution of single cell Psi values, we developed a Bayesian framework, anchor, to designate each AS exon’s distribution into one of five modalities: (1) excluded, where most cells contain the excluded isoform and Psi is close to 0; (2) bimodal, where two subpopulations with either the excluded (Psi near 0) or included isoform (Psi close to 1) can be observed; (3) included, where most cells contain the inclusion isoform (Psi close to 1); (4) middle, where most individual cells have both the inclusion and exclusion isoforms (Psi distribution is centered around 0.5); and (5) multimodal, where the distribution of inclusion and exclusion isoforms does not fit any of the previous categories (Figures 2a,b). Within each cell-type, the Psi distribution for each AS event was modeled using a Beta distribution (Barash et al., 2010). We use a two-step process to assign modality (Figure 2c), a Bayes Factor (K) of fit was first calculated for the one-parameter models, namely included and excluded. If K did not meet the cutoff (), these events are then assessed for their fit to the two-parameter models, namely middle and bimodal. Remaining events were assigned to the multimodal modality. Detection of unimodality was robust up to the addition of ~50\% uniform random noise (Supplementary Fig. 2a-g) and bimodality was detected up to a 9:1 ratio of inclusion to exclusion, and is robust with up to 70\% uniform random noise (Supplementary Fig. 2h-r). Thus, we conclude that anchor is a robust classifier of alternative splicing modalities.
 
-In all three cell-types, exons within the excluded and included modalities account for 25-30\% and 45-50\% of all AS exons analyzed, respectively, indicating that up to 70-80\% of AS events in a given cell-type exhibit unimodality (Figure 2d, Supplementary Fig. 2s), with events largely shared across cell-types (Supplementary Fig. 2t). In comparison, AS events that exhibit bimodality account for up to 20\% of detected AS events, whereas the middle and multimodal modalities account for less than 1\% of AS events. The high-variance bimodal and multimodal events differ the most from bulk samples’ AS estimates with a Δ$\Psi$>0.1 for 40-80\% of the events Supplementary Fig. 2u). Simulations indicate that the observed percentages of unimodal and bimodal AS events are statistically unexpected (random permutations expect 99\% bimodality and ~0\% unimodality; Figure 2e). As we increased the gene expression thresholds, the total number of reliably detected AS events decrease for all modalities. Yet, bimodal events continue to be observed even in the genes with the highest expression (log2TPM > 9, Supplementary Fig. 2v-y), suggesting that sampling biases cannot account for the observation of bimodality. Therefore, our algorithm anchor estimated that most AS events are either included or excluded in single cells, with up to a fifth of events exhibiting bimodality or multimodality, which are undetected in bulk splicing analyses.
+In all three cell-types, exons within the excluded and included modalities account for 25-30\% and 45-50\% of all AS exons analyzed, respectively, indicating that up to 70-80\% of AS events in a given cell-type exhibit unimodality (Figure 2d, Supplementary Fig. 2s), with events largely shared across cell-types (Supplementary Fig. 2t). In comparison, AS events that exhibit bimodality account for up to 20\% of detected AS events, whereas the middle and multimodal modalities account for less than 1\% of AS events. The high-variance bimodal and multimodal events differ the most from bulk samples’ AS estimates with a $\Delta\Psi$>0.1 for 40-80\% of the events Supplementary Fig. 2u). Simulations indicate that the observed percentages of unimodal and bimodal AS events are statistically unexpected (random permutations expect 99\% bimodality and ~0\% unimodality; Figure 2e). As we increased the gene expression thresholds, the total number of reliably detected AS events decrease for all modalities. Yet, bimodal events continue to be observed even in the genes with the highest expression (log2TPM > 9, Supplementary Fig. 2v-y), suggesting that sampling biases cannot account for the observation of bimodality. Therefore, our algorithm anchor estimated that most AS events are either included or excluded in single cells, with up to a fifth of events exhibiting bimodality or multimodality, which are undetected in bulk splicing analyses.
 
 \subsection{Splicing modalities exhibit distinct sequence and evolutionary characteristics.}
 
@@ -41,7 +41,7 @@ Lastly, we examined how the multimodal MXE event containing e9 and e10 in PKM di
 
 To visualize changes in modalities, we developed bonvoyage, where the distribution of Psi values of each AS event across single cells from a cell-type is first discretized, then reduced via non-negative matrix factorization (NMF) (Figure 6a, left and middle). NMF is a dimensionality reduction algorithm which factorizes data into its components using a parts-based approach (Lee and Seung, 1999). The Psi values are factorized into two components, excluded (x-axis) and included (y-axis), which depict the “waypoint” space (Figure 6a, right). Usage of the waypoint space is illustrated using simulated modality data (Supplementary Fig. 6a-d). Each AS event is depicted as a point in waypoint space, which represents the distribution of Psi scores in single cells (Figure 6b). All the AS events measured in a cell-type were projected into waypoint space, and colored by their corresponding modalities identified previously by anchor (Figure 6c, d). In such a representation, each modality occupies a discrete region in waypoint space. Also, AS events that change their Psi distributions during differentiation undergo “voyages”. To illustrate, exon 9 of PKM is excluded in iPSCs, becomes more included in NPC and is a bimodal exon in MNs. Such a change of modality creates a voyage in waypoint space (Figure 6e). In contrast, projection of this event measured in bulk MNs failed to capture the bimodality. Additionally, MAP4K4 encodes a member of the serine/threonine protein kinase family and inclusion of exon 16 extends MAP4K4’s protein kinase-like domain. This event became progressively more included along MN differentiation, readily observed in a voyage plot, which we independently confirmed by RNA-FISH (Supplementary Fig. 6e-f). Thus, bonvoyage is an effective method to visualize and identify AS events that change across populations.
 
-We next sought to establish a global view of AS changes between cell-types. Focusing on exons with large voyages (Supplementary Fig. 6g), we visualized the voyaging exons using vectors between iPSC and MNs. We regard voyages as complementary to delta Psi (Δ$\Psi$) used in two-sample AS comparisons of bulk RNA-seq data. Consistent with our modality-based analysis (Figure 4a), the majority of the dynamic exons changed from or to the bimodal modality (Figure 6f-g, Supplementary Fig 6h). To evaluate the consequences of voyages on the protein properties of resulting isoforms, we transformed each property into a waypoint-weighted score by multiplying the property of each isoform with its corresponding coordinate in the waypoint space, enabling a more integrated evaluation of protein property based on both isoforms and their distribution in single cells. Among many properties investigated, we found that MNs favor splicing that generates more disordered and basic proteins such as the events in RPS24, and ZNF207/BuGZ (Figure 7a, b). Thus, AS voyages allow for population-based investigation of the protein outcomes of isoform preferences. 
+We next sought to establish a global view of AS changes between cell-types. Focusing on exons with large voyages (Supplementary Fig. 6g), we visualized the voyaging exons using vectors between iPSC and MNs. We regard voyages as complementary to delta Psi ($\Delta\Psi$) used in two-sample AS comparisons of bulk RNA-seq data. Consistent with our modality-based analysis (Figure 4a), the majority of the dynamic exons changed from or to the bimodal modality (Figure 6f-g, Supplementary Fig 6h). To evaluate the consequences of voyages on the protein properties of resulting isoforms, we transformed each property into a waypoint-weighted score by multiplying the property of each isoform with its corresponding coordinate in the waypoint space, enabling a more integrated evaluation of protein property based on both isoforms and their distribution in single cells. Among many properties investigated, we found that MNs favor splicing that generates more disordered and basic proteins such as the events in RPS24, and ZNF207/BuGZ (Figure 7a, b). Thus, AS voyages allow for population-based investigation of the protein outcomes of isoform preferences. 
 
 To validate the Psi distributions of bimodal and high-magnitude voyaging AS events during motor neuron differentiation, we designed splicing-sensitive primers to assess exon usage by qPCR at single cell resolution in iPSCs, NPCs and MNs. We observed that ~60\% AS events recapitulated an exon inclusion distribution similar to our findings using scRNA-seq (Figure 7c-f, Supplementary Fig. 7a-n). For example, a SE event that introduces a stop codon and removes three amino acids from C-terminal in RPS24, encoding a ribosomal subunit protein S24, previously reported in different human tissues (Xu and Roufa, 1996). In single cells, this event was partially included in individual iPSCs (middle modality), and became completely included in almost all NPCs and MNs (Figure 7c). These dynamics were confirmed by sc-qPCR (Figure 7d). Also, exon 9 in ZNF207 encoding serine-rich sequences that may affect post-translational modifications, starts as multimodal in iPSCs and becomes more included in MNs (Figure 7e). The dynamics and voyages of these and many other exons were validated by sc-qPCR (Figure 7f, Supplementary Fig. 7a-n). Thus, by enabling comparison of splicing profiles and protein properties, the bonvoyage resource enables visualization of AS dynamics across cell populations.
 
@@ -56,7 +56,7 @@ To validate the Psi distributions of bimodal and high-magnitude voyaging AS even
 
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
+  \includegraphics[width=5.8in]{sandiego}
   \caption[Cell-type specific alternative splicing is an independent feature of cell identity.]{
   Cell-type specific alternative splicing is an independent feature of cell identity.\\
 \textbf{a.}~Human iPSCs are directly differentiated into neuron progenitor cells (NPC) or motor neurons (MN) in vitro. Cell identity is verified by immunofluorescence staining. 63 iPSCs (light green), 73 NPCs (medium green) and 70 MNs (dark green) passed QC and were retained for splicing analysis. Bulk samples are independent samples of ~1000 cells.\\
@@ -73,7 +73,7 @@ To validate the Psi distributions of bimodal and high-magnitude voyaging AS even
 
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
+  \includegraphics[width=5.8in]{sandiego}
   \caption[Assignment of single cell alternative splicing events to modalities using anchor algorithm.]{
   Assignment of single cell alternative splicing events to modalities using anchor algorithm.\\
 \textbf{a.}~Schematic of SE and MXE alternative splicing events. Isoform A refers to exclusion of alternative exon (exon 2 in SE and exclusion of exon 2 (black) but inclusion of exon 3 (grey) in MXE), and isoform B refers to inclusion of alternative exon (exon 2 in SE and MXE) of alternative exon. Circles illustrate a single cell containing RNA molecules of a given AS event. Light grey represents isoform A and dark grey represents isoform B. \\
@@ -87,7 +87,7 @@ To validate the Psi distributions of bimodal and high-magnitude voyaging AS even
 
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
+  \includegraphics[width=5.8in]{sandiego}
   \caption[Bimodal AS events exhibit distinct sequence and evolutionary features.]{
   Bimodal AS events exhibit distinct sequence and evolutionary features.\\
 All results are shown for iPSCs that have highest number of AS events (12,690). Results are similar in three cell-types, except where indicated. All q-values of significance were derived from multiple hypothesis corrected (Bonferonni) non-parametric Mann-Whitney U test, unless otherwise indicated.\\
@@ -104,7 +104,7 @@ All results are shown for iPSCs that have highest number of AS events (12,690). 
 
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
+  \includegraphics[width=5.8in]{sandiego}
   \caption[Dynamic AS events are primarily contributed by highly variant bimodal and multimodal events.]{Dynamic AS events are primarily contributed by highly variant bimodal and multimodal events.\\
 \textbf{a.}~AS events change modalities during iPSC to MN transition. A total of 5,675 AS events was identified as common ones in both iPSCs and MNs. The compartmentalization of these common events in five modalities is presented in iPSCs (y-axis) against their corresponding modalities in MNs (x-axis). Gradient of heat map represents the percent of events in the iPSC modality row, annotated with the exact number of events. The diagonal indicates events remained in the same modality. Notably, 88\% of excluded events in iPSCs remained in excluded modality, and 86\% of included events in iPSCs remained as included in MNs. In contrast 52\% of bimodal events in iPSCs switch to either included or excluded modalities in MNs. Multiple hypothesis corrected (Bonferonni) hypergeometric tests were used to calculate significance.\\
 \textbf{b.}~During the differentiation from iPSCs to MNs or from iPSCs to NPCs, we found 1,586 (17.6\%) or 1,029 (18.0\%) AS events switched modality, respectively. 
@@ -119,7 +119,7 @@ All results are shown for iPSCs that have highest number of AS events (12,690). 
 
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
+  \includegraphics[width=5.8in]{sandiego}
   \caption[Bimodal and multimodal AS events reveal subpopulations invisible by gene expression alone.]{Bimodal and multimodal AS events reveal subpopulations invisible by gene expression alone.\\
 \textbf{a-g.} SNAP25 alternative splicing reveals a more mature subpopulation in motor neuron population.\\
 \textbf{a.}~SNAP25 is primarily expressed in MNs. \\
@@ -144,7 +144,7 @@ All results are shown for iPSCs that have highest number of AS events (12,690). 
 
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
+  \includegraphics[width=5.8in]{sandiego}
   \caption[Bonvoyage visualizes dynamic AS changes.]{Bonvoyage visualizes dynamic AS changes.\\
 \textbf{a.}~A schematic to illustrate the transformation of splicing profiles into the two-dimensional waypoint space by bonvoyage. Splicing distribution of each event (A, B, C and D represent 4 different AS events) was discretized into bins (left), factorized by non-negative matrix factorization (NMF) and projected onto 2-dimensional space (middle), such that each data point represents a distribution of alternative splicing. The origin point represents a distribution that all cells have 50\% of inclusion and 50\% exclusion reads observed in scRNA-seq. When the distributions of the same event (either event B or C) are visualized in two different cell-types or states, the dynamic of the event is illustrated by its voyage in the waypoint space (right panel).\\
 \textbf{b.}~AS events in iPSCs projected in the waypoint space. The shade of hexagon indicates the number of events. \\
@@ -160,7 +160,7 @@ All results are shown for iPSCs that have highest number of AS events (12,690). 
 
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
+  \includegraphics[width=5.8in]{sandiego}
   \caption[qPCR validation and summary of biological findings.]{qPCR validation and summary of biological findings.\\
 \textbf{a-b.}~Waypoint-weighted protein properties changing between iPSC and MN. Significant changes(blue) are identified by a factor of three on Mahalanobis distance relative to all iPSC-MN comparisons.\\
 \textbf{a.}~Protein disorder by IUPred, where a score above 0.5 (red dashed line) indicates disorder.\\
@@ -175,6 +175,14 @@ All results are shown for iPSCs that have highest number of AS events (12,690). 
   \label{fig:validation_summary}
 \end{figure}
 
+
+
+\begin{figure}[h] 
+  \centering
+  \includegraphics[width=5.8in]{sandiego}
+  \caption{Graphical abstract.}
+  \label{fig:graphical_abstract}
+\end{figure}
 
 \section{Methods}
 
@@ -345,7 +353,7 @@ Another example is a bimodal SE event in SUGT1 gene (MIS12 Kinetochore Complex A
 
 \begin{figure}[h] 
 %   \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
+  \includegraphics[width=5.8in]{sandiego}
   \caption[Quality control of single cell expression and splicing data.]{Quality control of single cell expression and splicing data.\\
 \textbf{a.} RT-qPCR validation of biomarker expression in the bulk populations of iPSCs (light green), NPCs  (medium green), MNs (dark green). Relative expression of the indicated genes were normalized to housekeeping genes RPL27 and PGK. \\
 \textbf{b.} Sequencing depth for single cell libraries were depicted in box plots. On average, 10-20 million reads of 100bp length was obtained. \\
@@ -373,7 +381,7 @@ Another example is a bimodal SE event in SUGT1 gene (MIS12 Kinetochore Complex A
 
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
+  \includegraphics[width=5.8in]{sandiego}
   \caption[Simulated datasets to test performance of \texttt{anchor}.]{
   Simulated datasets to test performance of \texttt{anchor}.\\
 \textbf{a.}~Violinplots depicting the creation of simulated modality datasets with increasing noise. The base dataset (\% Noise = 0) consisted of 100 samples of either all zeros (excluded), half zeros and half ones (bimodal), all ones (included), or all $0.5$s (middle), exactly representing the four modalities. Uniform random noise was added in 5\% increments, with 100 iterations at each noise level.
@@ -404,7 +412,7 @@ Another example is a bimodal SE event in SUGT1 gene (MIS12 Kinetochore Complex A
 
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
+  \includegraphics[width=5.8in]{sandiego}
   \caption[Molecular features of each splicing modality.]{
 Molecular features of each splicing modality.\\
 \textbf{a.}~Flanking intron sequence is more conserved in  bimodal modality. Shown in motor neurons,  intron conservation of bimodal events is slightly higher than excluded AS events.
@@ -429,7 +437,7 @@ Molecular features of each splicing modality.\\
 
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
+  \includegraphics[width=5.8in]{sandiego}
   \caption[Switching AS events are enriched for transcriptome and post-transcriptional regulation GO terms.]{
   Switching AS events are enriched for transcriptome and post-transcriptional regulation GO terms.\\
 \textbf{a.}~AS events change modalities during iPSC to NPC transition. A total of 7,962 AS events was identified as common events in both iPSCs and MNs. Notably, $\approx 82\%$ of excluded events in iPSCs remained in excluded modality, and $\approx 84\%$ of included events in iPSCs remained as included in NPCs. In contrast 42\% of bimodal events in iPSCs switch to either included or excluded modalities in NPCs.\\
@@ -441,7 +449,7 @@ Molecular features of each splicing modality.\\
 
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
+  \includegraphics[width=5.8in]{sandiego}
   \caption[Highly variant AS events reveal intricacies of cell states.]{
 Highly variant AS events reveal intricacies of cell states.\\
 \textbf{a.}~Read coverage tracks for SNAP25 in MNs. Numbers indicate observed junction reads.\\
@@ -470,7 +478,7 @@ Highly variant AS events reveal intricacies of cell states.\\
 
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
+  \includegraphics[width=5.8in]{sandiego}
   \caption[Overview of \bonvoyage.]{Overview of \bonvoyage.\\
 \textbf{a-d.}~Datasets used for testing \bonvoyage. Uniform random noise was added in 5\% intervals to all datasets, up to 95\% noise, for 100 iterations at each noise level.\\
 \textbf{a.}~Perfect middle, included, and excluded modalities, with added noise. Only 0\%, 25\%, 50\% and 75\% noise levels are shown for brevity. Top, averaged violinplots for all features at a given level of noise. Bottom, waypoint space of all features at the specified noise level.\\
@@ -491,7 +499,7 @@ Highly variant AS events reveal intricacies of cell states.\\
 
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.5\textwidth]{sandiego}
+  \includegraphics[width=5.8in]{sandiego}
   \caption[Validation of alternative splicing events by sc-qPCR.]{
   Validation of alternative splicing events by sc-qPCR.\\
 \textbf{a-g.} Distribution of alternative exon inclusion by single-cell RNA-Seq for indicated events in EWSR1~(\textbf{a}), DYNC1I2~(\textbf{b}), CLTC/CLCT2~(\textbf{c}), EIF5~(\textbf{d}), THYN1~(\textbf{e}), RBPJ~(\textbf{f}), and EIF4A2~(\textbf{g}), shown in violin plots (left) and in waypoint plots (right). Percent spliced-in (Psi/$\Psi$) is calculated based on single cell RNA-seq data, illustrated in green. Black dots indicate bulk samples (~1,000 cells) for each cell type.\\
@@ -505,7 +513,7 @@ Highly variant AS events reveal intricacies of cell states.\\
 \section{Discussion}
 We developed the Expedition software suite to address key aspects of AS analysis from single-cell RNA-seq data. The Expedition suite consists of three packages that integrate the detection and quantification of AS events (outrigger) with the assignment of modalities (anchor), and a method for visualization of changes in modality (bonvoyage). As an application, Expedition was used to analyze AS in single cells from three homogenous cell-types, specifically human pluripotent stem cells, neural progenitors and motor neurons. 
 
-Many studies have performed RNA sequencing from bulk samples to measure AS, where the “relative” inclusion (Δ$\Psi$) of alternative exons in a comparison (e.g. treatment versus control or between tissues) is the primary metric used. However, Δ$\Psi$ comparison across all single cells are impractical. Thus, robust estimation of Psi is required to assess the distribution of Psi amongst a population of single cells. It is also important that Psi values reflect the actual biological phenomenon, such that a Psi value of 0.5 indicates that 50\% of transcripts include the alternative exon while the other 50\% exclude it. Thus, using Psi of 0.5 as a prior in probabilistic models and assessing the confidence of estimates by resampling data (Katz et al., 2010) is not appropriate in single cell splicing analysis as it does not eliminate cases where the observed data and annotation are incompatible (examples shown in Supplementary Software Fig. 1). In contrast, outrigger identifies splicing events by constructing de novo splicing annotation based on only junction-spanning reads, reconstructs the exon trio (quartet) for SE (MXE) events using graph traversal, and quantifies Psi. Outrigger also applies user-defined rules that ensure compatibility and sufficient read coverage of the AS events. 
+Many studies have performed RNA sequencing from bulk samples to measure AS, where the “relative” inclusion ($\Delta\Psi$) of alternative exons in a comparison (e.g. treatment versus control or between tissues) is the primary metric used. However, $\Delta\Psi$ comparison across all single cells are impractical. Thus, robust estimation of Psi is required to assess the distribution of Psi amongst a population of single cells. It is also important that Psi values reflect the actual biological phenomenon, such that a Psi value of 0.5 indicates that 50\% of transcripts include the alternative exon while the other 50\% exclude it. Thus, using Psi of 0.5 as a prior in probabilistic models and assessing the confidence of estimates by resampling data \cite{Katz:2010iv} is not appropriate in single cell splicing analysis as it does not eliminate cases where the observed data and annotation are incompatible (examples shown in Supplementary Software Fig. 1). In contrast, outrigger identifies splicing events by constructing de novo splicing annotation based on only junction-spanning reads, reconstructs the exon trio (quartet) for SE (MXE) events using graph traversal, and quantifies Psi. Outrigger also applies user-defined rules that ensure compatibility and sufficient read coverage of the AS events. 
 
 Anchor enables the robust classification of AS exons into five modalities (included, middle, excluded, bimodal and multimodal). Anchor characterizes AS events by their distribution and variation at the population level using a Bayesian approach, instead of estimating the noise or cell-to-cell variation of AS events (Marinov et al., 2014).  The representation of modalities in all three cell-types is remarkably consistent: ~30\% excluded, ~50\% included and ~20\% bimodal modalities, with small contributions from middle and multimodal modalities, indicating that AS is largely unimodal at the single-cell level. The ability to categorize AS distribution and variation into modalities allowed us to identify distinct sequence and evolutionary features for the three major modalities (summarized in Figure 7g). While high variance bimodal and multimodal AS events exhibit some features intermediate between included and excluded modalities, other features suggest that these AS events reflect an evolutionarily important class of exons distinct from included and excluded. High variance events contain more highly conserved and longer flanking intronic sequences. The conserved flanking intronic sequences contain cis-motifs enriched for U or UA nucleotides, in contrast to the G rich sequence in included modality. G-rich sequences have been shown to create G-quadruplexes that increase efficiency of splicing (Marcel et al., 2011; Ribeiro et al., 2015; Zizza et al., 2016), and thus the lack of G-rich sequences in bimodal may promote their flexibility to be regulated by trans-factors. Interestingly, high variance AS events are also enriched for genes present in more recently evolved phylostrata. This enrichment is concomitant with a peak of gene emergence associated with the evolution of multicellularity, shortly before the Cambrian explosion (Domazet-Loso and Tautz, 2008). At the same time, orthologous exons of the human bimodal AS events detected in our cells are also more frequently regulated as AS across other mammalian lineages (Merkin et al., 2012). 
 

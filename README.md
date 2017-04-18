@@ -89,3 +89,14 @@ Then before the actual bibliography
 
     \urlstyle{same}
     \singlespacing
+
+
+Olga's changes
+--------------
+
+What I changed from the original `ucsd-thesis` template.
+
+- Palatino font instead of default LaTeX font (Computer Modern)
+- BibLaTeX instead of BibTex
+- Add SI units
+- Add personal macros
