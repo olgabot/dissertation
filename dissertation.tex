@@ -126,6 +126,8 @@
 \usepackage{setspace}
 \doublespace
 \usepackage[font=small, width=0.9\textwidth]{caption}
+\DeclareCaptionLabelFormat{prev-page}{\hrulefill\\#1 #2 \emph{(next page)}} 
+\usepackage{subfig}
 
 %% SUBFIG - Use this to place multiple images in a
 %    single figure.  Subfig will handle placement and
@@ -138,12 +140,15 @@
 % \usepackage[T1]{fontenc}
 % \usepackage{mathptmx}
 %% Palatino font (Olga's preference)
-% --- Old way of calling Palatino --- %
+% --- BEGIN Old way of calling Palatino --- %
 % \usepackage{palatino}
 % \usepackage{mathpazo}
-% --- New way of calling Palatino --- %
+% --- END Old way of calling Palatino --- %
+
+% --- BEGIN New way of calling Palatino --- %
 \usepackage{newpxtext}
 \usepackage{newpxmath}
+% --- END New way of calling Palatino --- %
 
 
 %% --- Begin Natbib --- %%
@@ -159,22 +164,23 @@
 \usepackage{csquotes}
 \usepackage[
 backend=biber,
-% style=alphabetic,
-sorting=ynt
+style=authoryear,
+sorting=nyt
 ]{biblatex}
  
-\addbibresource{chapter1.bib}
-\addbibresource{refs.bib}
+\addbibresource{chapter1}
+\addbibresource{refs}
 %% --- End BibLatex ---- %%
 
-% Directory trees
+% --- BEGIN macros and packages used in chapter 2 ---- %
+
+% Directory trees for chapter 2
 \usepackage{dirtree}
 
-% Multiple columns of math equations
+% Multiple columns of math equations (used in chapter 2)
 \usepackage{multicol}
 
 %% My macros
-
 \newcommand{\0}{excluded}
 \newcommand{\1}{included}
 \newcommand{\anchor}{\texttt{anchor}}
@@ -183,7 +189,6 @@ sorting=ynt
 \newcommand{\poshsplice}{\texttt{poshsplice}}
 \newcommand*{\maintext}{../}
 \newcommand{\XX}{\hl{\#\#\#}}
-
 
 % Define new colors
 \usepackage{xcolor}
@@ -199,6 +204,9 @@ sorting=ynt
 \DeclareSIUnit\Molar{\textsc{m}}
 % \DeclareSIUnit{\Molar}{M} 
 % \DelcareSIUnit{\uM}{\micro\Molar} 
+
+% --- END macros and packages used in chapter 2 --- %
+
 
 % % --- Begin use with Multibib ----
 % \usepackage[resetlabels]{multibib}
@@ -273,7 +281,7 @@ sorting=ynt
 %  All of the front matter.
 %  This includes the title, degree, dedication, vita, abstract, etc..
 %  Modify the file template_frontmatter.tex to change these pages.
-\include{template_frontmatter}
+\include{frontmatter}
 
 
 

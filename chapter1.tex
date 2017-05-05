@@ -59,36 +59,65 @@
 % \end{table}
 
 \section{Introduction}
-The human body contains an estimated $3.72 \times 10^{13}$ cells \cite{Bianconi2013-jr}, all of which are highly specialized in form and function, and yet despite their incredible differences in phenotypes, each cell contains nearly identical genotypes. These cells are different because of their different RNA, protein, and metabolite molecules, which coordinately regulate the cell to express different phenotypes. To study these differences between cells, we turn to single-cell analysis.
-The original tool for single-cell analysis is the microscope \cite{Hooke1665-bk,Van_Leeuwenhoek_undated-gu}, which can visualize differences between individual cells, but doesn't have the resolution to see the molecules that create these differences. To compare the molecules of single cells, recent advances in microfluidics have allowed for capture of one cell at a time, which can be coupled with modern high-throughput technology to measure many messenger RNA (mRNA) molecules per cell \cite{Kolodziejczyk:2015dj,Ziegenhain:2017kr}. Computational analysis of these high-dimensional data can identify differential cellular states or delineate cellular trajectories \cite{Bacher:2016jq,Cannoodt2016-mt,Liu:2016fd,Trapnell:2015er,Stegle:2015cx}.
-Lead:
-While single-cell capture has enabled probing of cellular state measured through mRNA abundances, the study of an mRNA molecule's rich life from birth (transcription) to death (degradation), the collection of actions known as mRNA processing (Figure~\ref{fig:singlecell_questions}a), has only started to be addressed at the single-cell level.
-Development
-To measure many targets, the high-throughput methods of single cell capture followed by RNA-sequencing (scRNA-Seq), as in bulk analyses, can enable the investigation of RNA processing that are measureable by sequencing, such as alternative splicing, RNA editing, and alternative polyadenylation.
-However, scRNA-Seq loses the information of RNA modifications, transcript dynamics, localization, binding partners, and secondary structure.
-These features currently must be measured in a different way
-Some of these features can be measured using low-throughput yet high-resolution microscopy-based methods, which can enable observation of dynamics, localization, and binding partners.
-However, a limitation of these techniques is that they can only be performed for a few targets at a time
-Conversely
-On the other hand, the measurement of a few targets
-Low-throughput: Single target, multiple measurements
-Microscopy-based techniques enable observation of dynamics, localization, and binding partners
-Questions of alternative splicing, nucleotide modifications, alternative polyadenylation have begun to be addressed at the single-cell level
-But a middle ground of measuring several aspects of the same cell or same transcript have not yet been established
-many questions of RNA processing beyond abundance remain unanswered.
-Resolution:
-We will review the available methods to probe RNA processing at the single cell level, and highlight the current limitations, showing opportunities for novel technology to disrupt knowledge of RNA processing
+The human body contains an estimated $3.72\times 10^{13}$ cells \parencite{Bianconi2013-jr}, all of which are highly specialized in form and function, and yet despite their incredible diversity in phenotypes, each cell contains nearly identical genotypes. These cells are heterogeneous because of their different RNA, protein, and metabolite molecules, which coordinately regulate the cell to express precise phenotypes. To study the variation between cells, we turn to single-cell analysis.
 
-\begin{figure}
-  \centering
-  \includegraphics[width=5.8in]{figures/singlecell_questions}
-  \caption[Overview of open questions in single-cell RNA processing.]{Overview of open questions in single-cell RNA processing.\\
+The original tool for single-cell analysis is the microscope \cite{Hooke1665-bk,Van_Leeuwenhoek_undated-gu}, which can visualize structural differences between individual cells, but the molecules that create these differences are too small to resolve in live cells by current microscope technology. To compare the molecules of single cells, recent advances in microfluidics have allowed for capture of one cell at a time, which can be coupled with modern high-throughput technology to measure many messenger RNA (mRNA) molecules per cell, and together these are combined to create single-cell RNA-sequencing (scRNA-Seq) \cite{Kolodziejczyk:2015dj,Ziegenhain:2017kr}. Computational analysis of these high-dimensional data can identify distinct cellular states or delineate cellular trajectories [reviewed by \cite{Bacher:2016jq,Cannoodt2016-mt,Liu:2016fd,Trapnell:2015er,Stegle:2015cx}.].
+
+While single-cell capture has enabled probing of cellular state measured through mRNA abundances, the study of an mRNA molecule’s rich life (Figure~\ref{fig:singlecell_questions}a) from birth (transcription) to death (degradation), the collection of actions known as mRNA processing \cite{Blanc2003-wk,Gerstberger:2014bx,Yeo:2016vz,Nussbacher:2015cwa,Singh:2015jg}, has only started to be addressed at the single-cell level. As in bulk RNA-seq \cite{Anders:2012esa,Kleinman:2012cu,Lianoglou:2013gw,Nishikura2010-dk,Park:2012hz,Peng2012-ru,Shen:2014gs,Wang:2008gt}, scRNA-seq has enabled the investigation of RNA processing features that are measureable by sequencing, such as alternative splicing, RNA editing, and alternative polyadenylation \cite{Karlsson2017-wy,Marinov2014-iw,Picardi2017-bv,Shalek2013-ez,Velten:2015ie,Welch:2016iz}. However, the high-throughput nature of scRNA-seq captures only the abundance of RNA transcripts in a snapshot in time and loses the information of RNA modifications, dynamics, localization, binding partners, and secondary structure. Thus, these features must be measured a different way.
+
+Ideally, we would capture the entire cellular and molecular context of an RNA molecule. To accomplish this, we turn back to the microscope, a tried and true tool. While even the highest resolution microscopes cannot discern individual molecules without significant amplification \cite{Femino1998-ws,Raj2009-ni}, microscopy captures cellular context including morphology and subcellular localization, and in the case of live-cell imaging, dynamics. Microscopy is limited by the ability to design fluorescent constructs to visualize RNA and protein molecules, and as a result, can only be performed for a few targets a time. Middle-ground technologies that are relatively high-throughput but also measure several aspects of the same cell or same transcript \cite{Gierahn2017-ko,Macaulay2017-tb} have highest potential for discovery.
+We will review the available methods to probe RNA processing at the single cell level, and highlight the current limitations, showing opportunities for novel technology to make breakthroughs in the knowledge of RNA processing.
+
+% --- BEGIN manual facingcaption --- %
+\clearpage
+\thispagestyle{facingcaption}
+\begin{figure}[h]
+\captionsetup{labelformat=prev-page}
+\caption[Overview of open questions in single-cell RNA processing.]{\textbf{Overview of open questions in single-cell RNA processing.}\\
 \textbf{a.}~Overview of the processing steps in an RNA’s life cycle: transcription (biogenesis), alternative splicing, poly-adenylation, modification, export, localization, translation, and degradation.\\
 \textbf{b.}~Dichotomy of investigating distribution of transcripts across cells with high-throughput methods, and distribution of transcripts within cells using high-resolution methods.\\
 \textbf{c.}~Examples of high-throughput measurements, where many transcripts can be measured at once, but only one feature of them may be measured.\\
-\textbf{d.}~Examples of high-resolution measurements, where only a few transcripts can be measured at once, but many features of them can be profiled.}
+\textbf{d.}~Examples of high-resolution measurements, where only a few transcripts can be measured at once, but many features of them can be profiled.
+}
 \label{fig:singlecell_questions}
 \end{figure}
+\clearpage
+\begin{figure}[h]
+\ContinuedFloat
+\captionsetup{labelformat=empty}
+\centering
+% \includegraphics[width=5.8in]{sandiego.jpg}
+\includegraphics[width=5.8in]{figures/singlecell_questions.pdf}
+\end{figure}
+%and, I'm not sure why, but one of the times I used this code the figure number wasn't augmented for the next figure, so check your figure numbers and if necessary uncomment the following line
+%\addtocounter{figure}{1}
+\clearpage
+% --- END manual facingcaption --- %
+
+% ---- BEGIN "facingcaption" page style - didn't work for me --- %
+% % use "facingcaption" page style to put the caption on the left
+% \newpage
+% \thispagestyle{facingcaption}
+% \begin{center}
+% \vspace*{3in}
+% \textbf{Overview of open questions in single-cell RNA processing.}
+% \end{center}
+% \textbf{a.}~Overview of the processing steps in an RNA’s life cycle: transcription (biogenesis), alternative splicing, poly-adenylation, modification, export, localization, translation, and degradation.\\
+% \textbf{b.}~Dichotomy of investigating distribution of transcripts across cells with high-throughput methods, and distribution of transcripts within cells using high-resolution methods.\\
+% \textbf{c.}~Examples of high-throughput measurements, where many transcripts can be measured at once, but only one feature of them may be measured.\\
+% \textbf{d.}~Examples of high-resolution measurements, where only a few transcripts can be measured at once, but many features of them can be profiled.
+
+
+% % \end{center}
+% \newpage
+
+% \begin{figure}[h]
+%   \centering
+%   \includegraphics[width=5.8in]{figures/singlecell_questions}
+%   \caption[Overview of open questions in single-cell RNA processing.]{Overview of open questions in single-cell RNA processing.}
+% \label{fig:singlecell_questions}
+% \end{figure}
+% ---- END "facingcaption page style - didn't work for me --- %
 
 \section{Balancing high-throughput and high-resolution single-cell technologies}
 
