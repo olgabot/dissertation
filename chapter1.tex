@@ -15,11 +15,11 @@
 
 % This subsection shows a sample figure.
 
-% \begin{figure}[h] 
+% \begin{figure}[h]
 %   \centering
 %   \includegraphics[width=0.5\textwidth]{sandiego}
 %   \caption[Short figure caption (must be \protect{$< 4$} lines in the list of figures)]{
-%   A picture of San Diego.  Note that figures must be on their own line (no neighboring text) and captions must be single-spaced and appear \protect\textit{below} the figure.  Captions can be as long as you want, but if they are longer than 4 lines in the list of figures, you must provide a short figure caption.\index{SanDiego}} 
+%   A picture of San Diego.  Note that figures must be on their own line (no neighboring text) and captions must be single-spaced and appear \protect\textit{below} the figure.  Captions can be as long as you want, but if they are longer than 4 lines in the list of figures, you must provide a short figure caption.\index{SanDiego}}
 %   \label{fig:sandiego}
 % \end{figure}
 
@@ -59,11 +59,11 @@
 % \end{table}
 
 \section{Introduction}
-The human body contains an estimated $3.72\times 10^{13}$ cells \parencite{Bianconi2013-jr}, all of which are highly specialized in form and function, and yet despite their incredible diversity in phenotypes, each cell contains nearly identical genotypes. These cells are heterogeneous because of their different RNA, protein, and metabolite molecules, which coordinately regulate the cell to express precise phenotypes. To study the variation between cells, we turn to single-cell analysis.
+The human body contains an estimated $3.72\times 10^{13}$ cells \cite{Bianconi2013-jr}, all of which are highly specialized in form and function, and yet despite their incredible diversity in phenotypes, each cell contains nearly identical genotypes. These cells are heterogeneous because of their different RNA, protein, and metabolite molecules, which coordinately regulate the cell to express precise phenotypes. To study the variation between cells, we turn to single-cell analysis.
 
 The original tool for single-cell analysis is the microscope \cite{Hooke1665-bk,Van_Leeuwenhoek_undated-gu}, which can visualize structural differences between individual cells, but the molecules that create these differences are too small to resolve in live cells by current microscope technology. To compare the molecules of single cells, recent advances in microfluidics have allowed for capture of one cell at a time, which can be coupled with modern high-throughput technology to measure many messenger RNA (mRNA) molecules per cell, and together these are combined to create single-cell RNA-sequencing (scRNA-Seq) \cite{Kolodziejczyk:2015dj,Ziegenhain:2017kr}. Computational analysis of these high-dimensional data can identify distinct cellular states or delineate cellular trajectories [reviewed by \cite{Bacher:2016jq,Cannoodt2016-mt,Liu:2016fd,Trapnell:2015er,Stegle:2015cx}.].
 
-While single-cell capture has enabled probing of cellular state measured through mRNA abundances, the study of an mRNA molecule’s rich life (Figure~\ref{fig:singlecell_questions}a) from birth (transcription) to death (degradation), the collection of actions known as mRNA processing \cite{Blanc2003-wk,Gerstberger:2014bx,Yeo:2016vz,Nussbacher:2015cwa,Singh:2015jg}, has only started to be addressed at the single-cell level. As in bulk RNA-seq \cite{Anders:2012esa,Kleinman:2012cu,Lianoglou:2013gw,Nishikura2010-dk,Park:2012hz,Peng2012-ru,Shen:2014gs,Wang:2008gt}, scRNA-seq has enabled the investigation of RNA processing features that are measureable by sequencing, such as alternative splicing, RNA editing, and alternative polyadenylation \cite{Karlsson2017-wy,Marinov2014-iw,Picardi2017-bv,Shalek2013-ez,Velten:2015ie,Welch:2016iz}. However, the high-throughput nature of scRNA-seq captures only the abundance of RNA transcripts in a snapshot in time and loses the information of RNA modifications, dynamics, localization, binding partners, and secondary structure. Thus, these features must be measured a different way.
+While single-cell capture has enabled probing of cellular state measured through mRNA abundances, the study of an mRNA molecule's rich life (Figure~\ref{fig:singlecell_questions}a) from birth (transcription) to death (degradation), the collection of actions known as mRNA processing \cite{Blanc2003-wk,Gerstberger:2014bx,Yeo:2016vz,Nussbacher:2015cwa,Singh:2015jg}, has only started to be addressed at the single-cell level. As in bulk RNA-seq \cite{Anders:2012esa,Kleinman:2012cu,Lianoglou:2013gw,Nishikura2010-dk,Park:2012hz,Peng2012-ru,Shen:2014gs,Wang:2008gt}, scRNA-seq has enabled the investigation of RNA processing features that are measureable by sequencing, such as alternative splicing, RNA editing, and alternative polyadenylation \cite{Karlsson2017-wy,Marinov2014-iw,Picardi2017-bv,Shalek2013-ez,Velten:2015ie,Welch:2016iz}. However, the high-throughput nature of scRNA-seq captures only the abundance of RNA transcripts in a snapshot in time and loses the information of RNA modifications, dynamics, localization, binding partners, and secondary structure. Thus, these features must be measured a different way.
 
 Ideally, we would capture the entire cellular and molecular context of an RNA molecule. To accomplish this, we turn back to the microscope, a tried and true tool. While even the highest resolution microscopes cannot discern individual molecules without significant amplification \cite{Femino1998-ws,Raj2009-ni}, microscopy captures cellular context including morphology and subcellular localization, and in the case of live-cell imaging, dynamics. Microscopy is limited by the ability to design fluorescent constructs to visualize RNA and protein molecules, and as a result, can only be performed for a few targets a time. Middle-ground technologies that are relatively high-throughput but also measure several aspects of the same cell or same transcript \cite{Gierahn2017-ko,Macaulay2017-tb} have highest potential for discovery.
 We will review the available methods to probe RNA processing at the single cell level, and highlight the current limitations, showing opportunities for novel technology to make breakthroughs in the knowledge of RNA processing.
@@ -74,7 +74,7 @@ We will review the available methods to probe RNA processing at the single cell 
 \begin{figure}[h]
 \captionsetup{labelformat=prev-page}
 \caption[Overview of open questions in single-cell RNA processing.]{\textbf{Overview of open questions in single-cell RNA processing.}\\
-\textbf{a.}~Overview of the processing steps in an RNA’s life cycle: transcription (biogenesis), alternative splicing, poly-adenylation, modification, export, localization, translation, and degradation.\\
+\textbf{a.}~Overview of the processing steps in an RNA's life cycle: transcription (biogenesis), alternative splicing, poly-adenylation, modification, export, localization, translation, and degradation.\\
 \textbf{b.}~Dichotomy of investigating distribution of transcripts across cells with high-throughput methods, and distribution of transcripts within cells using high-resolution methods.\\
 \textbf{c.}~Examples of high-throughput measurements, where many transcripts can be measured at once, but only one feature of them may be measured.\\
 \textbf{d.}~Examples of high-resolution measurements, where only a few transcripts can be measured at once, but many features of them can be profiled.
@@ -102,7 +102,7 @@ We will review the available methods to probe RNA processing at the single cell 
 % \vspace*{3in}
 % \textbf{Overview of open questions in single-cell RNA processing.}
 % \end{center}
-% \textbf{a.}~Overview of the processing steps in an RNA’s life cycle: transcription (biogenesis), alternative splicing, poly-adenylation, modification, export, localization, translation, and degradation.\\
+% \textbf{a.}~Overview of the processing steps in an RNA's life cycle: transcription (biogenesis), alternative splicing, poly-adenylation, modification, export, localization, translation, and degradation.\\
 % \textbf{b.}~Dichotomy of investigating distribution of transcripts across cells with high-throughput methods, and distribution of transcripts within cells using high-resolution methods.\\
 % \textbf{c.}~Examples of high-throughput measurements, where many transcripts can be measured at once, but only one feature of them may be measured.\\
 % \textbf{d.}~Examples of high-resolution measurements, where only a few transcripts can be measured at once, but many features of them can be profiled.
@@ -123,7 +123,7 @@ We will review the available methods to probe RNA processing at the single cell 
 
 A complex tissue such as the human brain contains many different transcripts, but by measuring them at the bulk level, the cell of origin for each transcript is unknown (Figure~\ref{fig:singlecell_questions}b, left). Using single-cell technologies, we quantify an RNA processing event either as presence or absence (e.g. m6A or splicing) or a continuous quantity (e.g. abundance or poly-A tail length). With these quantifications in hand, we want to be able to capture individual cells and measure each cell's transcripts to understand two separate questions (Figure~\ref{fig:singlecell_questions}b): How are transcripts distributed (1) across cells, and (2) within cells?
 	The questions of distributions of transcripts across cells and within cells represent the ends of a spectrum, each with their own advantages and limitations. Where on the one extreme there are high-throughput methods which can measure many transcripts per cell, but are low-resolution and can only measure one aspect, abundance, and on the other extreme are high-resolution methods which can measure a limited number of transcripts (low-throughput) but can measure many aspects beyond abundance, such as dynamics and localization.
-	
+
 
 \subsection{Throughput vs resolution}
 On the one end, we have high-throughput, low-resolution methods
@@ -163,7 +163,7 @@ One feature, many measurements
 Microscopy-based methods are ``single-cell'' and through live cell imaging, allow for observation of many dynamics, localization
 While an old tool, the microscope has undergone many advances
 This allows for analysis and discovery of characteristics that may be serendipitous or not have been planned, e.g. co-localization with cellular structures or visualization of unique dynamics in certain localizations, e.g. different dynamics in the nucelus vs cytoplasm \cite{Yap:2016bs,Yap:2016ig} is a really great example of this. Both isoforms found in individual neurons
-Technologies that balance both throughput and resolution that are ``just right,'' as in the children's fairy tale of ``Goldilocks'' 
+Technologies that balance both throughput and resolution that are ``just right,'' as in the children's fairy tale of ``Goldilocks''
 lie in the ``Goldilocks'' middle ground, are a major need and are currently limited in the still-growing field of technological development in single cells
 Most technological innovation has focused on increasing throughput or resolution, but we argue that the large leaps will be made by combining the two to show sevearl aspects of a single RNA transcript molecule, in a way that has never been seen before.
 in situ sequencing Long Cai's lab \cite{Shah:2016iy}
@@ -175,16 +175,16 @@ How do RNA levels influence protein levels?
 Seq-well (w/antibodies) \cite{Gierahn2017-ko}
 STill need:
 How do global RNA levels influence global protein levels?
-RNA-Seq + Proteomics 
+RNA-Seq + Proteomics
 How is the same RNA folded into 3D structures within the same cell? How does this change with time and localization?
 First, low throughput microscopy-based methods
 Eventually: RNA-Seq + RNA Structure
 Most high-throughput single cell analyses have been used to study cellular biology, for example, defining cell state as gene expression to delineate cellular trajectories \cite{Cannoodt2016-mt}.
-however the resolution of the microscope is such that we can see subcellular organelles, but not molecules. 
+however the resolution of the microscope is such that we can see subcellular organelles, but not molecules.
 WHile the microscope is great for cellular biology, cannot use it to study molecular biology
-However, single cell analyses can be used to study molecular processes, 
+However, single cell analyses can be used to study molecular processes,
 Initial studies were about how genes or RNA processing events are distributed across a population
-Later, will interrogate how RNA processing is distributed within a cell 
+Later, will interrogate how RNA processing is distributed within a cell
 Ultimately, ‘single-cell biology' is ‘biology'
 However, modern tools for ``single-cell analysis'' couple a high-throughput single-cell capture method, usually based in microfluidics, and a high-throughput measurement tool such as RNA-seq \cite{Ziegenhain:2017kr} or antibody-based mass cytometry \cite{Bendall2011-jm}
 However, there are much older tools for performing single cell analysis - the microscope, FACS
@@ -196,7 +196,7 @@ What we want to know about RNA processing events at the single cell level:
 
 Quantification: Presence or absence (e.g. m6A), or continuous quantity (e.g. length of poly-A tail)
 (1) Distribution across cells, within a population - cellular biology
-Population substructure 
+Population substructure
 Bi- and multi-modality
 Does these processes co-occur in the same cell, or are they in different cells?
 How can you be sure?
@@ -232,8 +232,8 @@ Currently, the phrase ``single-cell analysis'' tends to mean in modern times, hi
 
 
 \subsection{In vitro vs in vivo}
-In vitro 
-good for developing computational models 
+In vitro
+good for developing computational models
 Since they're seemingly homogeneous populations
 Good for understanding molecular biology
 Somewhat of a ``gold standard''
@@ -242,10 +242,10 @@ Can Look at partitioning of transcriptome between daughter cells
 Intermediate: organoids
 Good for studying cellular and organ-level biology in a controlled system
 Still don't know exact mapping to the true organ system
-In vivo  
+In vivo
 good for understanding organism-level cellular biology, fully within the context of the samples
 If there existed a perfect cell-type classifier, then in vivo could also be used to classify cells, then study their differential RNA processing
-To measure RNA processing across cells, we use high-throughput single-cell technologies to study cellular biology and answer the question, is a particular RNA processing event found only within certain subpopulations of cells, or does it co-occur within individual cells? If it's found within the same cell, are these on the same transcript, or on different transcripts in individual cells? Since these technologies only extract a snapshot in cellular time, akin to a still frame in a movie, we don't know how these transcripts change over time or how they are physically used within an individual cell, and thus high-throughput technologies are hypothesis-generating experiments. 
+To measure RNA processing across cells, we use high-throughput single-cell technologies to study cellular biology and answer the question, is a particular RNA processing event found only within certain subpopulations of cells, or does it co-occur within individual cells? If it's found within the same cell, are these on the same transcript, or on different transcripts in individual cells? Since these technologies only extract a snapshot in cellular time, akin to a still frame in a movie, we don't know how these transcripts change over time or how they are physically used within an individual cell, and thus high-throughput technologies are hypothesis-generating experiments.
 To test these hypotheses, we turn to low-throughput, high resolution technologies in molecular biology, which can answer the question, within cells, are the different transcripts differentially localized in different populations? Does the transcript have different temporal dynamics? Does it have different interactors, binding partners, or three-dimensional structure? To truly understand this, we would need to follow up with an experiment that turns the process of or over expresses it to see how it affects cellular fate.
 
 
@@ -253,7 +253,8 @@ To test these hypotheses, we turn to low-throughput, high resolution technologie
 
 \begin{figure}
   \centering
-  \includegraphics[width=5.8in]{figures/singlecell_central_dogma_methods}{Overview of what can be measured at different steps of the central dogma in terms of RNA processing.}
+  \includegraphics[width=5.8in]{figures/singlecell_central_dogma_methods}
+  \caption{Overview of what can be measured at different steps of the central dogma in terms of RNA processing.}
 \label{fig:singlecell_central_dogma_methods}
 \end{figure}
 
@@ -283,7 +284,7 @@ Q: Does the length of poly-A tails change for the same transcript, across differ
 End sequence analysis toolkit \cite{Derr:2016gk}
 3'UTR Sites: \cite{Dueck:2015hd}
 Hypothesis that Pol II holds a basket of RBPs which perform co-transcriptional splicing -- how to answer?
-Could study this with: Co-localization of typical splicing RBP (e.g. SRSFs) and tag initial CDS sequence 
+Could study this with: Co-localization of typical splicing RBP (e.g. SRSFs) and tag initial CDS sequence
 
 
 \subsection{Small RNAs}
@@ -294,7 +295,7 @@ Alternative splicing (AS) is a co- and post-transcriptional modification of mRNA
 
 Overall variation of AS in single cells can be studied using high-throughput methods such as RNA0sequencing. While bulk measurements show that individual isoforms may vary within a population, this doesn't show how individual cells use different transcripts. Understanding how individual cells choose one transcript or another has been challenging to measure. Do cells tend to have only one isoform of a gene, or do they contain many? One question that RNA-seq AS analysis can answer is, unbiasedly, which splicing events are changing within a cell population, or across cell populations? After bioinformatically filtering for a handful of transcripts that had only two transcripts differed by enough nucleotides to be detectable by RNA-FISH, they did RNA-FISH and looked at the variability \cite{Waks2011-ye}. The earliest study found that single-cell AS was more ``all or nothing'' -- each cell tended to have only one isoform, compared to bulk samples, which showed many isoforms \cite{Shalek2013-ez}. This shows that individual cells tend to only have a single isoform, and that variation in isoform composition, such as having multiple isoforms, is likely observed in bulk samples because of the heterogeneity of cells, rather than heterogeneity of transcripts within cells. Completeness of splicing is also associated with higher conservation of introns and exons \cite{Faigenbloom2015-jo}. Another study found that single cells had higher percentages of novel splice junctions than bulk data \cite{Marinov2014-iw}. Another study looked at alternative splicing in single cells captured from the mouse visual cortex and found changes in alternative splicing throughout the different cortical layers \cite{Tasic:2016jp}. Another study developed statistical models to find variable splicing events across single cells, and applied this to find splicing events that change with cell cycle \cite{Welch:2016iz}. Contrary to the initial study that most splicing events are ``all or nothing,'' another study used UMIs coupled with long-read sequencing to extract poly-adenylated mRNAs from from mouse oligodendrocytes and vascular and leptomeningeal cells \cite{Karlsson2017-wy}. They found a purifying selection of exon splice sites in protein coding genes, with very few junctions mapping to mis-spliced exons. They found up to 25 isoforms per cell, with most isoform differences occurring due to alternative transcription start and end sites, rather than cassette exons or 3' or 5' end positional differences. This result suggests there may be epigenetic marks that influences it is unknown the degree of coupling Currently, the answer to this question is limited by the capture methods of transcripts, and is limited to highly-expressed transcripts.
 
-The kinetics of splicing, especially the coupling of alternative splicing and transcription, is largely unknown. For example, the competition between transcript release and splicing of the final intron of human beta-globin was found to favor transcript release, then splicing. Interestingly, splicing of diffuse RNA occurred rapidly, faster than diffusion \cite{Coulon2014-he}. This study used PP7 and MS2 hairpins to tether fluorescent proteins to the intron and exon. This study focused on a constitutively excluded intron, but could be extended to study alternative splicing. To study these kinetics, a reporter system such as hairpin tethering would need to be used, or new technologies that couple RNA-seq with time-dependent incorporation such as radioactive labeling or introduction or isotopic nucleotides to capture dynamics along with a snapshot. For example, a proposed model for regulation of alternative splicing is the speed of the RNA polymerase, which can be influenced by epigenetic marks and GC content of the gene sequence. One necessary technology to study this phenomenon is the coupling of a assay measuring transcription speed, with an assay measuring splicing. 
+The kinetics of splicing, especially the coupling of alternative splicing and transcription, is largely unknown. For example, the competition between transcript release and splicing of the final intron of human beta-globin was found to favor transcript release, then splicing. Interestingly, splicing of diffuse RNA occurred rapidly, faster than diffusion \cite{Coulon2014-he}. This study used PP7 and MS2 hairpins to tether fluorescent proteins to the intron and exon. This study focused on a constitutively excluded intron, but could be extended to study alternative splicing. To study these kinetics, a reporter system such as hairpin tethering would need to be used, or new technologies that couple RNA-seq with time-dependent incorporation such as radioactive labeling or introduction or isotopic nucleotides to capture dynamics along with a snapshot. For example, a proposed model for regulation of alternative splicing is the speed of the RNA polymerase, which can be influenced by epigenetic marks and GC content of the gene sequence. One necessary technology to study this phenomenon is the coupling of a assay measuring transcription speed, with an assay measuring splicing.
 
 The differential usage of the same gene's isoforms remains an interesting question \cite{Yap:2016ig}. Why would a cell contain multiple isoforms? What are their different functions? For example, the cell polarity gene Cdc42 has two possible terminal exons, exon 6 and exon 7, but in non-neuronal cells, exon 6 is strongly suppressed by polypyrimidine tract binding protein (PTB/Ptbp1) and only exon 7 is included \cite{Yap:2016bs}. However, in neurons, Ptbp1 is not expressed, and both exon 6 and exon 7 transcripts are expressed in equimolar ratios, disrupting this equimolar concentration resulted in defects in neuronal development. Too much of the exon 6 isoform led to insufficient axonogenesis and too much of the exon 7 isoform led to insufficient dendritic maturation. This suggests the exact ratios and distributions are critical for normal neuronal development.
 
@@ -304,8 +305,8 @@ Could possibly be measured using RNA-seq
 
 Alternative splicing
 Questions
-How does alternative splicing vary between cells? 
-How does this differ from bulk measurements? 
+How does alternative splicing vary between cells?
+How does this differ from bulk measurements?
 Can we uncover AS-RBP networks by harnessing the natural variation within single cells?
 Why is splicing not rate-dependent on the length of the intron?
 High-throughput: RNA-Seq
@@ -313,7 +314,7 @@ A handful of papers have analyzed RNA-sequencing data for variable splicing even
 This is good for genes that are highly expressed.
 One question that RNA-seq AS analysis can answer is, unbiasedly, which splicing events are changing within a cell population, or across cell populations?
 Medium-throughput
-Several targets 
+Several targets
 
 Especially good for things that are lowly expressed
 Single-cell RT-PCR
@@ -325,7 +326,7 @@ Other papers have used single-cell reporter systems to study alternative splicin
 This is good for genes that are lowly expressed
 This is good for when you know what splicing event you are interested in
 This method is good for answering the question of given a specific splicing event, what are its dynamics and localizations?
-These questions can't be asked by current single-cell RNA-seq technologies 
+These questions can't be asked by current single-cell RNA-seq technologies
 Another study used red- and green-fluorescent proteins (RFP and GFP) conjugated to before and after the alternative exon of interest, and used the ratio of GFP to RFP to determine the inclusion ratios in individual cells. \cite{Gurskaya:2012hm}
 They used an alternative exon which caused a frameshift mutation, such that the downstream GFP would not be expressed if the exon was excluded, while the RFP would be constitutively expressed.
 Since the RFP and GFP would be closer to each other if the exon was spliced out, then they could use the ratio of RFP to GFP to get the inclusion levels of the exon across all cells
@@ -343,10 +344,10 @@ Could possibly be measured using RNA-seq
 
 \subsection{Nucleotide modifications and RNA editing}
 Questions:
-Are the same nucleotides modified across all cells of a cell type? 
+Are the same nucleotides modified across all cells of a cell type?
 What percentage of cells have that modification?
 There are over 100 nucleotide modifications, largely found in non-coding, regulatory RNA such as tRNA and rRNA \cite{Ferre-DAmare2003-to,Ishitani2008-rf,Sun2016-rk}
-Sun et al database of RNA modifications (http://mirlab.sysu.edu.cn/rmbase/) 
+Sun et al database of RNA modifications (http://mirlab.sysu.edu.cn/rmbase/)
 Do the nucleotide modifications co-occur on the same transcript, or are they mutually exclusive of one another?
 Technical limitations:
 Cannot yet see all nucleotide modifications of all transcripts, within a cell.
@@ -448,7 +449,7 @@ Beyond measuring presence or absence of RNA and its modifications, the interacti
 Disease focus (from Fernando)
 ALS
 To study ALS, People either extract the entire spinal cord or laser-capture microdissected motor neurons from the spinal cord
-Nobody knows what the other cell types do 
+Nobody knows what the other cell types do
 How are the supporting glia, astrocytes affected in the ALS spinal cords?
 Alzheimer's (from Alex Shishkin)
 Market size is Billions of dollars
@@ -458,7 +459,7 @@ Responding to immune insults or lesions
 Spatial mapping of the cell of origin with the RNA seq
 Spatial mapping of gene expression back to 3d position of cells (Achim et al., 2015; Mori et al., 2017)
 Ed boyden's methods
-Spatial transcriptomics (Ståhl et al., 2016; Vickovic, 2017) 
+Spatial transcriptomics (Ståhl et al., 2016; Vickovic, 2017)
 Fixed tissue, barcode each location
 Then do sequencing and reconstruct
 Long Cai's methods (Frieda et al., 2017; Shah et al., 2016a)
@@ -500,7 +501,7 @@ Cas9 + multiple fluorophores at beginning, middle and end of the RNA
 A major problem in the field of high-throughput biology is that as soon as a facet of a molecule is digitized, all other context is lost. For example, measuring RNA may inhibit measuring DNA, and measuring RNA abundance cannot currently be performed simultaneously with investigation of nucleotide modifications. How can cellular context be maximized in a high-throughput manner?
 This is a problem because the interplay between genotype and phenotype is lost.
 
-One solution to ameliorate the lost context is simultaneous measurements of multiple categories of molecules. While simultaneous capture of the (epi-)genome and transcriptome have been major breakthroughs (Angermueller et al., 2016; Dey et al., 2015; Hou et al., 2016; Macaulay et al., 2015; Reuter et al., 2016), there are many more aspects of cellular state that are still invisible to the sequencing eye. 
+One solution to ameliorate the lost context is simultaneous measurements of multiple categories of molecules. While simultaneous capture of the (epi-)genome and transcriptome have been major breakthroughs (Angermueller et al., 2016; Dey et al., 2015; Hou et al., 2016; Macaulay et al., 2015; Reuter et al., 2016), there are many more aspects of cellular state that are still invisible to the sequencing eye.
 Effect of non-RNA on RNA processing - e.g. DNA (chromatin, structure, SNPs) on RNA Processing (quantitative trait loci - QTLs)
 Chromatin modifications and their effect on transcription speed and alternative splicing
 Quantitative trait loci - SNPs + RNA processing
@@ -512,7 +513,7 @@ RBPs are glycosylated
 Does an RBP bind different regions, perform different functions, or interact with different proteins, when it is differentially glycosylated?
 Time scale: phosphorylation can be on the order of seconds
 
-Another method to create additional context for each individual cell is to combine high-throughput measurements with genome editing such as with CRISPR/Cas9, allowing for dissection of complex phenotypes in mammalian cells at large scales. For example, Perturb-seq is a method that combines knockdown of genes using CRISRPi with single-cell RNA-seq, and was used to study the unfolded protein response (Adamson et al., 2016) and effect of lipopolysaccharides on dendritic cells (Dixit et al., 2016). This created a computational scientist's dream dataset, as for each gene that was knocked down, there was a control dataset, and thus for developing algorithms, one could always have a negative control to check with. Perturb-Seq could be applied to study any aspect of RNA processing, e.g. systematically knocking down all protein components of the spliceosome or different alternative splicing factors. 
+Another method to create additional context for each individual cell is to combine high-throughput measurements with genome editing such as with CRISPR/Cas9, allowing for dissection of complex phenotypes in mammalian cells at large scales. For example, Perturb-seq is a method that combines knockdown of genes using CRISRPi with single-cell RNA-seq, and was used to study the unfolded protein response (Adamson et al., 2016) and effect of lipopolysaccharides on dendritic cells (Dixit et al., 2016). This created a computational scientist's dream dataset, as for each gene that was knocked down, there was a control dataset, and thus for developing algorithms, one could always have a negative control to check with. Perturb-Seq could be applied to study any aspect of RNA processing, e.g. systematically knocking down all protein components of the spliceosome or different alternative splicing factors.
 Another possibility is coupling RNA-seq with lineage-specific barcodes through genome editing by CRISPR/Cas9 (McKenna et al., 2016). This would allow for comparing the transcriptomes of cells from similar lineages. Using phylogenetic techniques, cell lineages could be reconstructed and even the times at which cells asymmetrically divided to change fates could be found. If RNA-seq encodes a cell's present, then its traced lineage encodes its past. This lineage tracing method, coupled with direct RNA sequencing, would help to understand how developmentally regulated RNA processing events such as RNA editing, m6A, and alternative splicing, are finely tuned in different lineages. Do all cells that were committed to a particular lineage also have certain RNA processing events? This could indicate inheritability of the event, either encoded through the genome or by asymmetrically dividing the RNA content of a mother cell.
 
 

@@ -1,0 +1,71 @@
+\BOOKMARK [0][-]{section*.1}{Signature Page}{}% 1
+\BOOKMARK [0][-]{section*.2}{Dedication}{}% 2
+\BOOKMARK [0][-]{section*.3}{Epigraph}{}% 3
+\BOOKMARK [0][-]{section*.4}{Table of Contents}{}% 4
+\BOOKMARK [0][-]{section*.5}{List of Figures}{}% 5
+\BOOKMARK [0][-]{section*.6}{List of Tables}{}% 6
+\BOOKMARK [0][-]{section*.7}{Acknowledgements}{}% 7
+\BOOKMARK [0][-]{section*.8}{Vita}{}% 8
+\BOOKMARK [0][-]{section*.9}{Abstract of the Dissertation}{}% 9
+\BOOKMARK [0][-]{chapter.1}{Single-cell mRNA processing}{}% 10
+\BOOKMARK [1][-]{section.1.1}{Introduction}{chapter.1}% 11
+\BOOKMARK [1][-]{section.1.2}{Balancing high-throughput and high-resolution single-cell technologies}{chapter.1}% 12
+\BOOKMARK [2][-]{subsection.1.2.1}{Throughput vs resolution}{section.1.2}% 13
+\BOOKMARK [2][-]{subsection.1.2.2}{In vitro vs in vivo}{section.1.2}% 14
+\BOOKMARK [1][-]{section.1.3}{Current methods for measuring RNA processing at the single-cell level}{chapter.1}% 15
+\BOOKMARK [2][-]{subsection.1.3.1}{Computational challenges and considerations}{section.1.3}% 16
+\BOOKMARK [2][-]{subsection.1.3.2}{Transcription}{section.1.3}% 17
+\BOOKMARK [2][-]{subsection.1.3.3}{Small RNAs}{section.1.3}% 18
+\BOOKMARK [2][-]{subsection.1.3.4}{Alternative splicing}{section.1.3}% 19
+\BOOKMARK [2][-]{subsection.1.3.5}{Nucleotide modifications and RNA editing}{section.1.3}% 20
+\BOOKMARK [2][-]{subsection.1.3.6}{RNA editing}{section.1.3}% 21
+\BOOKMARK [1][-]{section.1.4}{Future technologies required to meet unmet needs}{chapter.1}% 22
+\BOOKMARK [2][-]{subsection.1.4.1}{Co-occurrence and mutual exclusivity of RNA processing events}{section.1.4}% 23
+\BOOKMARK [2][-]{subsection.1.4.2}{Spatial analysis: Tissue- and organ-level in vivo}{section.1.4}% 24
+\BOOKMARK [2][-]{subsection.1.4.3}{Dynamics/time scale}{section.1.4}% 25
+\BOOKMARK [2][-]{subsection.1.4.4}{Moonshot: Spatial + Dynamics}{section.1.4}% 26
+\BOOKMARK [2][-]{subsection.1.4.5}{Single cell multi-omics: One cell, many measurements}{section.1.4}% 27
+\BOOKMARK [1][-]{section.1.5}{Discussion}{chapter.1}% 28
+\BOOKMARK [0][-]{chapter.2}{The Expedition software suite: Computational tools for transcriptome analysis}{}% 29
+\BOOKMARK [1][-]{section.2.1}{outrigger: Splicing estimation with de novo annotation and graph traversal}{chapter.2}% 30
+\BOOKMARK [2][-]{subsection.2.1.1}{Algorithm overview}{section.2.1}% 31
+\BOOKMARK [2][-]{subsection.2.1.2}{Comparison to other methods}{section.2.1}% 32
+\BOOKMARK [1][-]{section.2.2}{anchor: Modality estimation}{chapter.2}% 33
+\BOOKMARK [2][-]{subsection.2.2.1}{Algorithm overview}{section.2.2}% 34
+\BOOKMARK [2][-]{subsection.2.2.2}{Simulations}{section.2.2}% 35
+\BOOKMARK [2][-]{subsection.2.2.3}{Comparison to other methods}{section.2.2}% 36
+\BOOKMARK [1][-]{section.2.3}{bonvoyage: Transformation of distributions to waypoints and voyages}{chapter.2}% 37
+\BOOKMARK [2][-]{subsection.2.3.1}{Algorithm overview}{section.2.3}% 38
+\BOOKMARK [2][-]{subsection.2.3.2}{Simulations}{section.2.3}% 39
+\BOOKMARK [2][-]{subsection.2.3.3}{Comparison to other methods}{section.2.3}% 40
+\BOOKMARK [0][-]{chapter.3}{Single-cell alternative splicing analysis with Expedition reveals splicing dynamics during neuron differentiation}{}% 41
+\BOOKMARK [1][-]{section.3.1}{Introduction}{chapter.3}% 42
+\BOOKMARK [1][-]{section.3.2}{Results}{chapter.3}% 43
+\BOOKMARK [2][-]{subsection.3.2.1}{Identification of alternative splicing events in single cells with outrigger}{section.3.2}% 44
+\BOOKMARK [2][-]{subsection.3.2.2}{Assignment of single cell alternative splicing events to modalities using anchor}{section.3.2}% 45
+\BOOKMARK [2][-]{subsection.3.2.3}{Splicing modalities exhibit distinct sequence and evolutionary characteristics.}{section.3.2}% 46
+\BOOKMARK [2][-]{subsection.3.2.4}{Highly variant AS events can reveal subpopulations invisible to gene expression analysis}{section.3.2}% 47
+\BOOKMARK [2][-]{subsection.3.2.5}{Transformation of splicing distributions to “waypoints” reveals dynamic of AS events}{section.3.2}% 48
+\BOOKMARK [1][-]{section.3.3}{Methods}{chapter.3}% 49
+\BOOKMARK [2][-]{subsection.3.3.1}{Cell culture and differentiation}{section.3.3}% 50
+\BOOKMARK [2][-]{subsection.3.3.2}{Single-cell capture and library preparation}{section.3.3}% 51
+\BOOKMARK [2][-]{subsection.3.3.3}{RNA-Seq processing}{section.3.3}% 52
+\BOOKMARK [2][-]{subsection.3.3.4}{Single-cell expression-level quality control and outlier detection}{section.3.3}% 53
+\BOOKMARK [2][-]{subsection.3.3.5}{Estimation of alternative splicing}{section.3.3}% 54
+\BOOKMARK [2][-]{subsection.3.3.6}{Constitutive exons}{section.3.3}% 55
+\BOOKMARK [2][-]{subsection.3.3.7}{ICA on constitutively expressed genes and their splicing events}{section.3.3}% 56
+\BOOKMARK [2][-]{subsection.3.3.8}{Hierarchical clustering}{section.3.3}% 57
+\BOOKMARK [2][-]{subsection.3.3.9}{Gene Ontology Enrichment}{section.3.3}% 58
+\BOOKMARK [2][-]{subsection.3.3.10}{Categorization of alternative splicing ``modes''}{section.3.3}% 59
+\BOOKMARK [2][-]{subsection.3.3.11}{Sequence annotation of alternative isoforms}{section.3.3}% 60
+\BOOKMARK [2][-]{subsection.3.3.12}{Correlation of splicing to expression}{section.3.3}% 61
+\BOOKMARK [2][-]{subsection.3.3.13}{Transformation of splicing profiles to 2d space}{section.3.3}% 62
+\BOOKMARK [2][-]{subsection.3.3.14}{Waypoint-weighted protein properties}{section.3.3}% 63
+\BOOKMARK [2][-]{subsection.3.3.15}{Single-cell qPCR and primer design}{section.3.3}% 64
+\BOOKMARK [2][-]{subsection.3.3.16}{qPCR data processing}{section.3.3}% 65
+\BOOKMARK [2][-]{subsection.3.3.17}{RNA fluorescence in situ hybridization \(FISH\)}{section.3.3}% 66
+\BOOKMARK [2][-]{subsection.3.3.18}{RNA-FISH image acquisition and data processing}{section.3.3}% 67
+\BOOKMARK [1][-]{section.3.4}{Supplementary Notes}{chapter.3}% 68
+\BOOKMARK [2][-]{subsection.3.4.1}{Bimodal AS events that partition cell populations}{section.3.4}% 69
+\BOOKMARK [1][-]{section.3.5}{Discussion}{chapter.3}% 70
+\BOOKMARK [1][-]{section.3.6}{Acknowledgements}{chapter.3}% 71
