@@ -90,7 +90,7 @@
 %
 %                            instead of
 %                              1 Title of Chapter
-\documentclass[12pt,draft,chapterheads]{ucsd}
+\documentclass[12pt,chapterheads]{ucsd}
 
 
 
@@ -164,9 +164,11 @@
 %% --- Begin Natbib --- %%
 % Natbib doesn't work with ShareLatex, they recommend BibLatex instead, because the compilation is built-in to BibLatex but with BibTex you have to separately compile the .bbl file
 % cite package, to clean up citations in the main text. Do not remove.
-\usepackage[superscript]{cite}
-\usepackage[super,sort]{natbib}
+% \usepackage[superscript]{cite}
+\usepackage[super,sort&compress]{natbib}
 
+% Add Bibliography to the table of contents
+\usepackage[nottoc]{tocbibind}
 %% --- End Natbib --- %%
 
 %% --- Begin BibLatex --- %%
@@ -185,8 +187,16 @@
 
 % --- BEGIN macros and packages used in chapter 2 ---- %
 
+% Outrigger cases use "enumerate" but some definitions extend beyond a single line and this is problematic so have to use this package
+\usepackage{enumitem} % load this one
+\newenvironment{longdescription}
+  {\begin{description}[style=unboxed]}
+  {\end{description}}
+
 % Directory trees for chapter 2
 \usepackage{dirtree}
+% Set the line spacing in directory trees to be 8pt
+\setlength{\DTbaselineskip}{8pt}
 
 % Multiple columns of math equations (used in chapter 2)
 \usepackage{multicol}
@@ -262,9 +272,28 @@
              pdfproducer = {pdfLaTeX} }
 \urlstyle{same}
 
+% --- BEGIN cleveref for "clever" figure references --- %
+% With cleverref, can say "\cref{fig:myfig}" instead of "Figure~\ref{fig:myfig}"
 % Reference multiple figures at a time, e.g. Figures 1-4
 % Must be after hyperref
 \usepackage{cleveref}
+
+
+% Make all referenced figures and numbers bold
+\crefdefaultlabelformat{#2\textbf{#1}#3}
+
+% each of the following has two versions
+%   \crefname{environmentname}{singular}{plural}, to be used mid-sentence
+%   \Crefname{environmentname}{singular}{plural}, to be used at the beginning of a sentence
+\crefname{table}{\textbf{table}}{\textbf{tables}}
+\Crefname{table}{\textbf{Table}}{\textbf{Tables}}
+\crefname{figure}{\textbf{figure}}{\textbf{figures}}
+\Crefname{figure}{\textbf{Figure}}{\textbf{Figures}}
+\crefname{section}{\textbf{section}}{\texttbf{section}}
+\Crefname{section}{\textbf{Section}}{\textbf{Sections}}
+
+
+
 
 % \usepackage{bookmark}
 
@@ -391,8 +420,8 @@
 % \printindex %% Uncomment to display the index
 % \nocite{}  %% Put any references that you want to include in the bib
 %               but haven't cited in the braces.
-\bibliographystyle{natbib}  %% This is just my personal favorite style.
-                            %  There are many others.
+\bibliographystyle{unsrtnat} 
+\bibliography{paperpile}
 
 % --- BEGIN only works with multibib --- %
 % \setlength{\bibleftmargin}{0.25in}  % indent each item
@@ -401,9 +430,6 @@
 % \setlength{\bibitemsep}{0.16in}  % add extra space between items
 % --- END only works with multibib --- %
 
-\bibliography{chapter1,refs}  %% This looks for the bibliography in chapter1.bib, refs.bib
-%                          which should be formatted as a bibtex file.
-%                          and needs to be separately compiled into a bbl file.
 % ---- END Bibtex (not BibLaTex) ---- %
 
 % ---- BEGIN BibLaTex (not BibTex) ---- %

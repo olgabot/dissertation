@@ -33,10 +33,10 @@
 \othermembers{
 Professor C. Titus Brown\\
 Professor Amy Pasquinelli\\
-Professor Sam Pfaff
+Professor Sam Pfaff\\
 Professor Kun Zhang\\
 }
-\numberofmembers{5} % |chair| + |cochair| + |othermembers|
+\numberofmembers{6} % |chair| + |cochair| + |othermembers|
 
 
 %% START THE FRONTMATTER
@@ -110,6 +110,10 @@ Professor Kun Zhang\\
 %% SETUP THE TABLE OF CONTENTS
 %
 \tableofcontents
+
+
+
+
 \listoffigures  % Comment if you don't have any figures
 \listoftables   % Comment if you don't have any tables
 
@@ -124,7 +128,16 @@ Professor Kun Zhang\\
 %  the OGS Formatting Manual for more information.
 %
 \begin{acknowledgements}
- Thank you to Yan for being a patient mentor.
+Thank you to Yan for being a patient mentor.
+ 
+Thank you to Gene for giving me many opportunities.
+
+Chapter 1, in part, is currently being prepared for submission for publication of the material. Botvinnik, Olga; Song, Yan; Yeo, Gene W. The dissertation author was the primary investigator and author of this material. 
+ 
+Chapter 2, in part, has been submitted for publication as the supplementary material as it may appear in Molecular Cell, 2017, Yan Song$^*$, Olga B Botvinnik$^*$, Michael T Lovci, Boyko Kakaradov, Patrick Liu, Jia L. Xu and Gene W Yeo ($^*$ These authors contributed equally to this work).  The dissertation author was one of the primary investigators and authors of this paper. 
+
+Chapter 3, in full, has been submitted for publication as it may appear in Molecular Cell, 2017, Yan Song$^*$, Olga B Botvinnik$^*$, Michael T Lovci, Boyko Kakaradov, Patrick Liu, Jia L. Xu and Gene W Yeo ($^*$ These authors contributed equally to this work).  The dissertation author was one of the primary investigators and authors of this paper. 
+
 \end{acknowledgements}
 
 
@@ -142,15 +155,23 @@ Professor Kun Zhang\\
 \end{vita}
 
 \begin{publications}
-\item Yan Song*, \textbf{Olga B Botvinnik}*, Michael T Lovci, Boyko Kakaradov, Patrick Liu, Jia L. Xu and Gene W Yeo. Single-cell alternative splicing analysis with Expedition reveals splicing dynamics during neuron differentiation. \emph{In review}. * These authors contributed equally to this work.
+\item Yan Song*, \textbf{Olga B Botvinnik}*, Michael T Lovci, Boyko Kakaradov, Patrick Liu, Jia L. Xu and Gene W Yeo. Single-cell alternative splicing analysis with Expedition reveals splicing dynamics during neuron differentiation. \emph{Accepted}. * These authors contributed equally to this work.
+
 \item Curtis A Nutter, Elizabeth A Jaworski, Sunil K Verma, Vaibhav Deshmukh, Qiongling Wang, \textbf{Olga B Botvinnik}, Mario J Lozano, Ismail J Abass, Talha Ijaz, Allan R Brasier, Nisha J Garg, Xander H T Wehrens, Gene W Yeo, and Muge N Kuyumcu-Martinez. Dysregulation of RBFOX2 Is an Early Event in Cardiac Pathogenesis of Diabetes. \emph{Cell Reports}, 15(10):2200-2213, 2016.
+
 \item Jong Wook Kim*, \textbf{Olga B Botvinnik}*, Omar Abudayyeh, Chet Birger, Joseph Rosen- bluh, Yashaswi Shrestha, Mohamed E Abazeed, Peter S Hammerman, Daniel DiCara, David J Konieczkowski, et al. Characterizing genomic alterations in cancer by complementary functional associations. \emph{Nature Biotechnology, 2016}. * These authors contributed equally to this work.
+
 \item P Compeau and P Pevzner. \emph{Bioinformatics Algorithms} Volume 1, volume 1 of An Active Learning Approach. Active Learning Publishers LLC, 2 edition, 2015. Contributed text, figures, problems and code solutions, primarily to ``Chapter 4: How Do We Sequence Antibiotics?''.
+
 \item Kris C Wood, David J Konieczkowski, Cory M Johannessen, Jesse S Boehm, Pablo Tamayo, \textbf{Olga B Botvinnik}, Jill P Mesirov, William C Hahn, David E Root, Levi A Garraway, et al. MicroSCALE screening reveals genetic modifiers of therapeutic response in melanoma. \emph{Science Signaling}, 5(224):rs4, 2012.
+
 \item A Goncearenco, P Grynberg, \textbf{Olga B Botvinnik}, Geoff Macintyre, and Thomas Abeel. Highlights from the Eighth International Society for Computational Biology (ISCB) Student Council Symposium 2012. \emph{BMC Bioinformatics}, 2012.
+
 \item Naomi Galili, Pablo Tamayo, \textbf{Olga B Botvinnik}, Jill P Mesirov, Margarita R Brooks, Gail Brown, and Azra Raza. Prediction of response to therapy with ezatiostat in lower risk myelodysplastic syndrome. \emph{Journal of Hematology \& Oncology}, 5(1):1, 2012.
+
 \item Naomi Galili, Pablo Tamayo, \textbf{Olga B Botvinnik}, Jill P Mesirov, Jennifer Zikria, Gail Brown, and Azra Raza. Gene Expression Studies May Identify Lower Risk Myelodys- plastic Syndrome Patients Likely to Respond to Therapy with Ezatiostat Hydrochloride
 (TLK199). \emph{Blood}, 118(21):2779-2779, 2011.
+
 \item Michael F Berger, Gwenael Badis, Andrew R Gehrke, Shaheynoor Talukder, Anthony A Philippakis, Lourdes Pena-Castillo, Trevis M Alleyne, Sanie Mnaimneh, \textbf{Olga B Botvinnik}, Esther T Chan, et al. Variation in homeodomain DNA binding revealed by high-resolution analysis of sequence preferences. \emph{Cell}, 133(7):1266-1276, 2008.
 \end{publications}
 
@@ -168,7 +189,6 @@ Professor Kun Zhang\\
 %
 \begin{abstract}
   Alternative splicing (AS) generates isoform diversity critical for cellular identity and homeostasis in multicellular life. Although AS variation has been observed among single cells for a few events, little is known about the biological significance of such variation. We developed Expedition, a computational framework consisting of outrigger, a \emph{de novo} splice graph transversal algorithm to detect AS; anchor, a Bayesian approach to assign modalities and bonvoyage, a visualization tool using non-negative matrix factorization to display modality changes. Applying Expedition to single iPSCs undergoing neuronal differentiation, we discover up to 20\% of AS exons exhibit bimodality and are flanked by more conserved introns harboring distinct cis-regulatory motifs. Bimodal exons constitute the majority of cell-type specific splicing, are highly dynamic during cellular transitions, preserve translatability and reveal intricacy of cell states invisible to global gene expression analysis. Systematic AS characterization in single cells redefines our understanding of AS complexity in cell biology.
-
 \end{abstract}
 
 
