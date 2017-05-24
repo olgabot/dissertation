@@ -93,7 +93,7 @@ Professor Kun Zhang\\
 %  The same choices that applied to the dedication apply here.
 %
 \begin{epigraph} % The style file will position the text for you.
-  \emph{Always stay gracious, best revenge is your paper - Beyonc\'e}
+  \emph{Always stay gracious, best revenge is your paper -- Beyonc\'e Giselle Knowles Carter}
 %   ---Smarty Pants
 \end{epigraph}
 
@@ -112,11 +112,21 @@ Professor Kun Zhang\\
 \tableofcontents
 
 
-
-
+%%% --- BEGIN trying stuff from stackoverflow --- %%%
+% For some reason doing these modifications in ucsd.cls doesn't do anything
+% so I'm forcing them to happen here and modify only the \listoffigures command
+{
+\let\oldnumberline\numberline
+\renewcommand*{\numberline}[1]{%
+  \oldnumberline{\figurename~#1:}}%
+% {\ssp\@starttoc{lof}}%
+% \if@restonecol\twocolumn\fi%
+% \renewcommand{\numberline}{\figurename~\oldnumberline}
 \listoffigures  % Comment if you don't have any figures
-\listoftables   % Comment if you don't have any tables
-
+}
+%%% --- END trying stuff from stackoverflow --- %%%
+\listoffigures
+% \listoftables   % Comment if you don't have any tables
 
 
 %% ACKNOWLEDGEMENTS
@@ -128,15 +138,33 @@ Professor Kun Zhang\\
 %  the OGS Formatting Manual for more information.
 %
 \begin{acknowledgements}
-Thank you to Yan for being a patient mentor.
- 
-Thank you to Gene for giving me many opportunities.
+
+There are too many people to thank but I will do my best. 
+
+Thank you to Dr. Yan Song for being a patient mentor, keeping me on track, and giving key criticisms of the internal workings of all the algorithms, and for making sure everything is explained as clearly as possible. I couldn't have done any of this without you.
+
+Thank you to Dr. Gene Yeo for giving me freedom and opportunities to teach my passions of open-source software, open science to unsuspecting biologists.
+
+Thank you to Dr. Sheng Zhong for key computational feedback on \texttt{anchor}'s classifier.
+
+Thank you to Dr. C. Titus Brown for believing in me and sponsoring me for the NumFOCUS John Hunter Technical Fellowship.
+
+Thank you to Dr. Amy Pasquinelli for keeping the broader biological picture in mind, to Dr. Kun Zhang for knowing what's out there in the single-cell world, and to Dr. Sam Pfaff for neurobiological insights.
+
+Thank you to Dr. Mike Lovci for teaching me about alternative splicing, to Dr. Boyko Kakaradov for teaching me about machine learning, to Gabriel Pratt for being my Python partner in crime, to Dr. Andrew Gross for answering my annoying \texttt{pandas} questions and to the entire Yeo Lab for being supportive of my open source endeavors.
+
+
+Thank you especially to especially Pantea Khodami who will always me my Kappa Alpha Theta big sister and has always been there for me and has supported me every step of the way. Thank you to my friends Dr. Anne-Ruxandra Carvunis, Dr. Charisse Crenshaw, Colleen Stoyas, Cynthia Hsu, Kara Gordon, Emily Wheeler, David Nelles, Ron Batra, En-Ching Luo, Alain Domissy, Alice Ho, Rose Hurwitz, Alexa Robinson, Wendi Zhang, Nazita Lejevardi, Michelle Ma, Liam Fedus .... Thank you to the \emph{Lean In and Stay Classy San Diego crew}: Dianna Cowern, Shari Haynes, Kristen Pe\~na Breanna Berry, Daryl Fairweather, Shelly Wanamaker, and ... Thank you to my current and former roommates and affiliates Cailey Bromer, Daniella Bardalez Gagliuffi, Robert Schwartz, Jennifer Hammond, Patrick Wise, Sara Glass, Keawe Kolohe, Sharon and Matt Scott, and Andie Rotner for being a kind, supportive and welcoming environment to come home to, and reminding me there's so much more to life than just cells.
+
+Thank you to my family, especially my mother and father for leaving the Soviet Union and bringing me to the United States to give me the opportunity to write a dissertation like this. Thank you to my brothers for being understanding of my mad scientist ways, thank you to my stepmother Ira whose family warmly accepted me as one of their own, especially Alya and Max Zolotorev.
+
+Huge thank you to Kwasi Nti for surviving the Herculean task of dating a PhD student, for listening so hard and making sure I always made the best decision for me. I love you.
 
 Chapter 1, in part, is currently being prepared for submission for publication of the material. Botvinnik, Olga; Song, Yan; Yeo, Gene W. The dissertation author was the primary investigator and author of this material. 
  
-Chapter 2, in part, has been submitted for publication as the supplementary material as it may appear in Molecular Cell, 2017, Yan Song$^*$, Olga B Botvinnik$^*$, Michael T Lovci, Boyko Kakaradov, Patrick Liu, Jia L. Xu and Gene W Yeo ($^*$ These authors contributed equally to this work).  The dissertation author was one of the primary investigators and authors of this paper. 
+Chapter 2, in part, has been accepted for publication as the supplementary material as it may appear in Molecular Cell, 2017, Yan Song$^*$, Olga B Botvinnik$^*$, Michael T Lovci, Boyko Kakaradov, Patrick Liu, Jia L. Xu and Gene W Yeo ($^*$ These authors contributed equally to this work).  The dissertation author was one of the primary investigators and authors of this paper. 
 
-Chapter 3, in full, has been submitted for publication as it may appear in Molecular Cell, 2017, Yan Song$^*$, Olga B Botvinnik$^*$, Michael T Lovci, Boyko Kakaradov, Patrick Liu, Jia L. Xu and Gene W Yeo ($^*$ These authors contributed equally to this work).  The dissertation author was one of the primary investigators and authors of this paper. 
+Chapter 3, in full, has been accepted for publication as it may appear in Molecular Cell, 2017, Yan Song$^*$, Olga B Botvinnik$^*$, Michael T Lovci, Boyko Kakaradov, Patrick Liu, Jia L. Xu and Gene W Yeo ($^*$ These authors contributed equally to this work).  The dissertation author was one of the primary investigators and authors of this paper. 
 
 \end{acknowledgements}
 

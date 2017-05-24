@@ -8,7 +8,7 @@
 % ----------------------------------------------------------------------
 % WARNING:
 %
-%   This template has not endorced by OGS or any other official entity.
+%   This template has not endorsed by OGS or any other official entity.
 %   The official formatting guide can be obtained from OGS.
 %   It can be found on the web here:
 %   http://ogs.ucsd.edu/AcademicAffairs/Documents/Dissertations_Theses_Formatting_Manual.pdf
@@ -160,6 +160,19 @@
 \makeatother
 % --- END make verbatim smaller --- %
 
+% Add the word "Figure" in the list of figures, e.g. instead of :
+%     List of Figures
+%     1.1   Caption of Figure 1........1
+%     1.2   Caption of Figure 2........9
+% it will look like this:
+%     List of Figures
+%     Figure 1.1    Caption of Figure 1...1
+%     Figure 1.2    Caption of Figure 2...9
+% \usepackage{tocloft}
+% \newlength{\mylen}
+% \renewcommand{\cftfigpresnum}{\figurename\enspace}
+% \settowidth{\mylen}{\cftfigpresnum\cftfigaftersnum}
+% \addtolength{\cftfignumwidth}{\mylen}
 
 %% --- Begin Natbib --- %%
 % Natbib doesn't work with ShareLatex, they recommend BibLatex instead, because the compilation is built-in to BibLatex but with BibTex you have to separately compile the .bbl file
@@ -229,6 +242,12 @@
 % --- END macros and packages used in chapter 2 --- %
 
 
+% Allow hyphenated urls
+% \PassOptionsToPackage{hyphens}{url}
+
+
+
+
 % % --- Begin use with Multibib ----
 % \usepackage[resetlabels]{multibib}
 % \newcites{book,article,poster}{{Books},{Journal Articles},{Conference Posters}}
@@ -264,10 +283,11 @@
 \usepackage[colorlinks=true, pdfstartview=FitV,
             linkcolor=black, citecolor=black,
             urlcolor=black, plainpages=false,
+            breaklinks=true,
             pdfpagelabels]{hyperref}
-\hypersetup{ pdfauthor = {Your Name Here},
-             pdftitle = {The Title of The Dissertation},
-             pdfkeywords = {Keywords for Searching},
+\hypersetup{ pdfauthor = {Olga Borisovna Botvinnik},
+             pdftitle = {Computational analysis of single-cell alternative splicing},
+             pdfkeywords = {single-cell, alternative splicing, rna processing, computational biology, bioinformatics, bayesian, machine learning, dimensionality reduction, nmf, pca, ica, non-negative matrix factorization, principal component analysis, independent component analysis},
              pdfcreator = {pdfLaTeX with hyperref package},
              pdfproducer = {pdfLaTeX} }
 \urlstyle{same}
@@ -277,6 +297,7 @@
 % Reference multiple figures at a time, e.g. Figures 1-4
 % Must be after hyperref
 \usepackage{cleveref}
+
 
 
 % Make all referenced figures and numbers bold
@@ -318,6 +339,12 @@
 \usepackage{booktabs}  % Enables \toprule  http://ctan.org/pkg/array
 
 
+% For auto-linebreaking of hyphenated words like "high-throughput"
+\usepackage{hyphenat}
+
+% Set tolerance of hanging words outside of margins to 0
+% \tolerance=0
+% OKay nvm that does really weird stuff
 
 \begin{document}
 

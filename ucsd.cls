@@ -527,10 +527,10 @@
 \null\vfill\dsp
 \begin{center}
 {\fmfont
-\includegraphics{cc_by.png}\par
-CC-BY \par
+\includegraphics{cc-by.eps}\par
+CC BY 4.0 \par
 \@author, \@degreeyear\par
-This work is licensed under a Creative Commons Attribution 4.0 International License. To view a copy of this license, visit \url{http://creativecommons.org/licenses/by/4.0/}}
+This work is licensed under a Creative Commons Attribution 4.0 International License. To view a copy of this license, visit \url{https://creativecommons.org/licenses/by/4.0/}}
 \end{center}
 \end{alwayssingle}
 
@@ -1188,18 +1188,20 @@ on microfilm and electronically: }}\\
   \@restonecolfalse%
   \if@twocolumn\@restonecoltrue\onecolumn\fi%
   \newpage%
-  \centerline{\expandafter\uppercase\expandafter{\listfigurename}}%
+  \centerline{\expandafter\uppercase\expandafter{asdfsafasdf\listfigurename}}%
   \bigskip%
   \phantomsection%
-  \addcontentsline{toc}{frontmatter}{\protect\numberline{}\listfigurename }%
+  \addcontentsline{toc}{frontmatter}{\protect Figure~\numberline{}\listfigurename }%
   %This group overloads \numberline to output ``Figure 1.3'' instead of ``1.3''
-  \begingroup%
-    \let\ORIG@numberline\numberline%
-    \renewcommand*{\numberline}[1]{%
-      \ORIG@numberline{\figurename~##1:}}%
-    {\ssp\@starttoc{lof}}%
-    \if@restonecol\twocolumn\fi%
-  \endgroup %
+%   \begingroup%
+%     \let\oldnumberline\numberline
+%         \renewcommand{\numberline}{asldkfjalksjflksadkfjs~\oldnumberline}
+%     % \let\ORIG@numberline\numberline%
+%     % \renewcommand*{\numberline}[1]{%
+%     %   \ORIG@numberline{\figurename~##1:}}%
+%     % {\ssp\@starttoc{lof}}%
+%     % \if@restonecol\twocolumn\fi%
+%   \endgroup %
   }
 
 \newlength{\@figurelength}
