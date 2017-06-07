@@ -35,9 +35,6 @@ Broadly, the goal of \outrigger\, is to create a custom, \emph{de novo} alternat
 
 
 
-\paragraph{\texttt{outrigger index}: Create custom alternative splicing annotation.} The following is a narrative describing \textbf{\Cref{fig:outrigger_index}a}.
-
-
 % --- BEGIN manual facingcaption --- %
 \clearpage
 \thispagestyle{facingcaption}
@@ -65,6 +62,9 @@ Broadly, the goal of \outrigger\, is to create a custom, \emph{de novo} alternat
 % --- END manual facingcaption --- %
 
 
+\paragraph{\texttt{outrigger index}: Create custom alternative splicing annotation.} The following is a narrative describing \textbf{\Cref{fig:outrigger_index}a}.
+
+
 \subparagraph{Inputs.} Two inputs are required for \texttt{outrigger index}: junction counts and gene annotations. The junction counts can be provided in many forms: either \texttt{.bam} \cite{Group:OEYDIUUE} genome alignment files, splice junction count \texttt{.SJ.out.tab} files created by the STAR aligner\cite{Dobin:2013fg}, or a pre-compiled table of samples' junction reads in a \texttt{.csv} format. The gene annotations can be provided in \texttt{.gtf} or \texttt{.gff} format.
 
 \subparagraph{Step 1: Retain junctions from each cell with sufficient read depth.} Junctions with reads in an individual sample less than the minimum number of reads, $r_{\min}$ are removed. By default, $r_{\min} = 10$, and can be adjusted by the user, for example to a minimum of 88 reads, with \texttt{-{}-min-reads~88} on the command line. To illustrate, if one junction is observed with two (2) reads in 100 samples, although there were a total of 200 reads observed on the junction, it will be discarded at this step. Because, there is not sufficient evidence to suggest that this junction is well-covered in any sample.
@@ -86,8 +86,8 @@ The splicing event definitions in the \texttt{events.csv} files are specified by
 Below is an example command using \texttt{outrigger index}:
 
 \begin{verbatim}
-outrigger index -{}-bam *sorted.bam \
-    -{}-gtf gencode.vM10.annotation.gtf
+outrigger index --bam *sorted.bam \
+    --gtf gencode.vM10.annotation.gtf
 \end{verbatim}
 
 This creates a folder called \texttt{outrigger\_output} with the following contents:

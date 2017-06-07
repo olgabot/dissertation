@@ -338,6 +338,30 @@
 \usepackage{array}  % Enables "m" tabular environment http://ctan.org/pkg/array
 \usepackage{booktabs}  % Enables \toprule  http://ctan.org/pkg/array
 
+%%% --- BEGIN adjust spacing and italics of \paragraph/\subparagraph --- %%%
+\newlength{\myindent} 
+\setlength{\myindent}{\parindent} 
+\makeatletter
+\renewcommand*
+    \paragraph{\@startsection{paragraph}    % counter
+    {4}                                     % level
+    {\myindent}                             % indent
+    {-3.25ex \@plus -1ex \@minus -0.2ex}    % beforeskip
+    {0.01pt}                                % afterskipe
+    {\normalfont\bfseries\nobreak\normalize}%
+}
+\renewcommand*
+    \subparagraph{\@startsection{subparagraph}  % counter
+    {4}                                         % level
+    {\myindent}                                 % indent
+    {-3.25ex \@plus -1ex \@minus -0.2ex}        % beforeskip
+    {0.01pt}                                    % afterskip
+    {\normalfont\itseries\nobreak\normalize}%
+}
+\makeatother
+%%%
+
+
 
 % For auto-linebreaking of hyphenated words like "high-throughput"
 \usepackage{hyphenat}
