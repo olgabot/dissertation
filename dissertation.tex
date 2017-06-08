@@ -260,6 +260,16 @@
 % % --- END use with Multibib ---
 
 
+%%% --- BEGIN using titlesec to adjust section fonts ---- %%%
+\usepackage[T1]{fontenc}
+\usepackage{titlesec}
+\titleformat{\paragraph}[runin]{\bfseries}{\theparagraph}{1em}{}
+\titlespacing{\paragraph}{\parindent}{0em}{2em}
+\titleformat{\subparagraph}[runin]{\itshape}{\subtheparagraph}{1em}{}
+%\titlespacing*{\paragraph}{\parindent}{}{}
+%%% --- END using titlesec to adjust section fonts ---- %%%
+
+
 %% INDEX
 %   Uncomment the following two lines to create an index:
 % \usepackage{makeidx}
@@ -338,29 +348,37 @@
 \usepackage{array}  % Enables "m" tabular environment http://ctan.org/pkg/array
 \usepackage{booktabs}  % Enables \toprule  http://ctan.org/pkg/array
 
-%%% --- BEGIN adjust spacing and italics of \paragraph/\subparagraph --- %%%
-\newlength{\myindent} 
-\setlength{\myindent}{\parindent} 
-\makeatletter
-\renewcommand*
-    \paragraph{\@startsection{paragraph}    % counter
-    {4}                                     % level
-    {\myindent}                             % indent
-    {-3.25ex \@plus -1ex \@minus -0.2ex}    % beforeskip
-    {0.01pt}                                % afterskipe
-    {\normalfont\bfseries\nobreak\normalize}%
-}
-\renewcommand*
-    \subparagraph{\@startsection{subparagraph}  % counter
-    {4}                                         % level
-    {\myindent}                                 % indent
-    {-3.25ex \@plus -1ex \@minus -0.2ex}        % beforeskip
-    {0.01pt}                                    % afterskip
-    {\normalfont\itseries\nobreak\normalize}%
-}
-\makeatother
-%%%
-
+%%%% --- BEGIN adjust spacing and italics of \paragraph/\subparagraph --- %%%
+%\newlength{\myindent} 
+%\setlength{\myindent}{\parindent} 
+%\makeatletter
+%\renewcommand*
+%    \paragraph{\@startsection{paragraph}    % counter
+%    {4}                                     % level
+%    {\myindent}                             % indent
+%    {-3.25ex \@plus -1ex \@minus -0.2ex}    % beforeskip
+%    {0.01pt}                                % afterskip
+%    {\normalfont\bfseries\nobreak\size@paragraph}%
+%}
+%%\renewcommand*
+%%    \subparagraph{\@startsection{subparagraph}  % counter
+%%    {4}                                         % level
+%%    {\myindent}                                 % indent
+%%    {-3.25ex \@plus -1ex \@minus -0.2ex}        % beforeskip
+%%    {0.01pt}                                    % afterskip
+%%    {\normalfont\itseries\nobreak\normalize}%
+%%}
+%\makeatother
+%%%%
+%
+%
+%%%% --- BEGIN using titlesec to adjust section fonts ---- %%%
+%\usepackage[T1]{fontenc}
+%\usepackage{titlesec}
+%\titleformat{\paragraph}[runin]
+%{\bfseries\scshape}{\theparagraph}{1em}{}
+%%%% --- END using titlesec to adjust section fonts ---- %%%
+%
 
 
 % For auto-linebreaking of hyphenated words like "high-throughput"
